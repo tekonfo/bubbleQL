@@ -1,7 +1,9 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import useSWR from 'swr'
+
+const fetcher = (...args: any[]) => fetch(args[0], args[1]).then(res => res.json())
 
 const Home: NextPage = () => {
   return (
@@ -13,6 +15,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
+      <Profile />
       <table>
         <thead>
           <tr>
@@ -44,5 +47,16 @@ const Home: NextPage = () => {
     </div>
   )
 }
+
+function Profile () {
+  const { data, error } = useSWR('/api/user/123', fetcher)
+
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
+
+  // データをレンダリングする
+  return <div>hello {data.name}!</div>
+}
+
 
 export default Home
