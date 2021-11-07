@@ -16,6 +16,7 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
       <Profile />
+      <Bubble />
       <table>
         <thead>
           <tr>
@@ -56,6 +57,16 @@ function Profile () {
 
   // データをレンダリングする
   return <div>hello {data.name}!</div>
+}
+
+function Bubble(){
+  const { data, error } = useSWR('/api/bubble', fetcher)
+
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
+
+  // データをレンダリングする
+  return <div>{data.name}</div>
 }
 
 

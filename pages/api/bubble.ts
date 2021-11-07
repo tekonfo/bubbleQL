@@ -5,9 +5,14 @@ type Data = {
   name: string
 }
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  res.status(200).json({ name: 'John Doe' })
+  const repoUrl = "https://api.github.com/repos/deatiger/next-tutorial-torasemi/contents/posts"
+  const response = await fetch(repoUrl)
+  const data: any = await response.json()
+  const animeNames = data.message
+
+  res.status(200).json({name: animeNames})
 }
