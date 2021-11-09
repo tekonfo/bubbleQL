@@ -62,17 +62,12 @@ function Profile() {
 function createTable(results: any) {
   if (results.length == 0) return <div>no records</div>
   const keys: Array<string> = Object.keys(results[0])
-  const th = keys.map(key => '<td>${key}</td>')
+  const th = keys.map(key => <th key={key}>{key}</th>)
 
   return (
     <table>
       <thead>
-        <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
-        </tr>
+        <tr>{th}</tr>
       </thead>
       geohgeoshogdsa
     </table>
