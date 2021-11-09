@@ -3,7 +3,8 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import useSWR from 'swr'
 
-const fetcher = (...args: any[]) => fetch(args[0], args[1]).then(res => res.json())
+const fetcher = (...args: any[]) =>
+  fetch(args[0], args[1]).then(res => res.json())
 
 const Home: NextPage = () => {
   return (
@@ -15,41 +16,40 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-      <Profile />
-      <Bubble />
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-        </tbody>
-      </table>
+        <Profile />
+        <Bubble />
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Username</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+          </tbody>
+        </table>
       </main>
 
-      <footer className={styles.footer}>
-      </footer>
+      <footer className={styles.footer}></footer>
     </div>
   )
 }
 
-function Profile () {
+function Profile() {
   const { data, error } = useSWR('/api/user/123', fetcher)
 
   if (error) return <div>failed to load</div>
@@ -59,15 +59,34 @@ function Profile () {
   return <div>hello {data.name}!</div>
 }
 
-function Bubble(){
+function createTable(results: any) {
+  if (results.length == 0) return <div>no records</div>
+  const keys: Array<string> = Object.keys(results[0])
+  const th = keys.map(key => '<td>${key}</td>')
+
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Username</th>
+        </tr>
+      </thead>
+      geohgeoshogdsa
+    </table>
+  )
+}
+
+function Bubble() {
   const { data, error } = useSWR('/api/bubble', fetcher)
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
 
   // データをレンダリングする
-  return <div>{data.name}</div>
+  return createTable(data.results)
 }
-
 
 export default Home
