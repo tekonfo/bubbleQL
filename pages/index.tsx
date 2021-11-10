@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import useSWR from 'swr'
+import { ReactChild, ReactFragment, ReactPortal } from 'react'
 
 const fetcher = (...args: any[]) =>
   fetch(args[0], args[1]).then(res => res.json())
@@ -18,30 +19,6 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <Profile />
         <Bubble />
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Username</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-          </tbody>
-        </table>
       </main>
 
       <footer className={styles.footer}></footer>
@@ -61,15 +38,23 @@ function Profile() {
 
 function createTable(results: any) {
   if (results.length == 0) return <div>no records</div>
+  // TODO: keyを全部の行のsetにする
   const keys: Array<string> = Object.keys(results[0])
   const th = keys.map(key => <th key={key}>{key}</th>)
+
+  const trs = []
+  for (const res of results) {
+    const td = keys.map(k => <td key={k}>{res[k]}</td>)
+    const tr = <tr>{td}</tr>
+    trs.push(tr)
+  }
 
   return (
     <table>
       <thead>
         <tr>{th}</tr>
       </thead>
-      geohgeoshogdsa
+      <tbody>{trs}</tbody>
     </table>
   )
 }
