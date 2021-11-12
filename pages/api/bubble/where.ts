@@ -1,7 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import BubbleResponse from './model/bubble/dataResponse'
-import Bubble from './model/bubble/Bubble'
+import BubbleResponse from '../model/bubble/dataResponse'
 
 type Data = {
   name: string
@@ -12,9 +11,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>,
 ) {
-  const bubble = new Bubble('try-plugin', '', true)
-  const studentUrl = bubble.getDataEndpoint('student')
-  const response = await fetch(studentUrl)
+  const repoUrl =
+    'https://try-plugin.bubbleapps.io/version-test/api/1.1/obj/student'
+  const response = await fetch(repoUrl)
   const data: any = await response.json()
   const r = new BubbleResponse(data)
 
