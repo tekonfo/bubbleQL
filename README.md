@@ -4,7 +4,7 @@ This is a DB client tool that can handle [Bubble](https://bubble.io)'s DB in an 
 
 please access this url
 
-[bubble-ql.vercel.app](bubble-ql.vercel.app)
+[bubble-ql.vercel.app](http://bubble-ql.vercel.app)
 
 ## Getting Started
 
