@@ -6,20 +6,21 @@ describe('next-test-api-route-handler test', () => {
   const bubble = new Bubble('try-plugin', '', true)
   const url = bubble.getDataEndpoint('test')
 
-  test('API ROUTEのテスト GET', async () => {
-    expect.hasAssertions()
-    await testApiHandler({
-      requestPatcher: req => (req.url = url),
-      handler,
-      test: async ({ fetch }) => {
-        const res = await fetch({
-          method: 'GET',
-        })
-        expect(await res.json()).toStrictEqual({
-          name: '0',
-          results: [],
-        })
-      },
-    })
-  })
+  // TODO: testをmock化しないとリクエストが流れまくる
+  // test('API ROUTEのテスト GET', async () => {
+  //   expect.hasAssertions()
+  //   await testApiHandler({
+  //     requestPatcher: req => (req.url = url),
+  //     handler,
+  //     test: async ({ fetch }) => {
+  //       const res = await fetch({
+  //         method: 'GET',
+  //       })
+  //       expect(await res.json()).toStrictEqual({
+  //         name: '0',
+  //         results: [],
+  //       })
+  //     },
+  //   })
+  // })
 })
