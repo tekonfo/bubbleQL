@@ -15,7 +15,10 @@ describe('next-test-api-route-handler test', () => {
         const res = await fetch({
           method: 'GET',
         })
-        expect(await res.json()).toStrictEqual([{}])
+        expect(await res.json()).toStrictEqual({
+          name: '0',
+          results: [],
+        })
       },
     })
   })
