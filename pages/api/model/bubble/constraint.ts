@@ -13,7 +13,9 @@ export default class Constraint {
   }
 
   // objectにする
-  toJson() {}
+  toJson(): string {
+    return ''
+  }
 }
 
 class GetgraphicType {
