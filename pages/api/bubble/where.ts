@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import BubbleResponse from '../model/bubble/dataResponse'
+import Request from './request/request'
 
 type Data = {
   name: string
@@ -16,9 +16,8 @@ export default async function handler(
     return
   }
 
-  const response = await fetch(req.url)
-  const data: any = await response.json()
-  const r = new BubbleResponse(data)
+  const request = new Request(req.url)
+  const r = await request.fetch()
 
   res.status(200).json({ name: r.count.toString(), results: r.results })
 }
