@@ -1,5 +1,4 @@
-import { timeStamp } from 'console'
-import Constraint from '../../model/bubble/Constraint'
+import { Constraint } from '../../model/bubble/Constraint'
 import Request from './request'
 
 export default class SearchRequest extends Request {
@@ -31,11 +30,11 @@ export default class SearchRequest extends Request {
   // TODO: これまだ途中。これ進めていく
   encodeParams() {
     const array = []
-    array.push('api_token=' + this.apiToken)
+    // array.push('api_token=' + this.apiToken)
     const jsonConstraints = this.constraints.map(c => c.toJson())
     const stringConstraints = jsonConstraints.join(',')
     array.push('constraints=[' + stringConstraints + ']')
-    array.push('sort_field=' + this.sortField)
+    // array.push('sort_field=' + this.sortField)
     return encodeURI(array.join('&'))
   }
 }
