@@ -35,6 +35,6 @@ export default class SearchRequest extends Request {
     const stringConstraints = jsonConstraints.join(',')
     array.push('constraints=[' + stringConstraints + ']')
     // array.push('sort_field=' + this.sortField)
-    return encodeURI(array.join('&'))
+    return array.join('&')
   }
 }
