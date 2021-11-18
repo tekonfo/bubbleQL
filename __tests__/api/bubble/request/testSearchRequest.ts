@@ -2,10 +2,9 @@ import SearchRequest from '../../../../pages/api/bubble/request/searchRequest'
 import {
   Constraint,
   ConstraintType,
-  GeographicType,
 } from '../../../../pages/api/model/bubble/Constraint'
 
-describe('test searchRequest', () => {
+describe('test searchRequest encodeParams', () => {
   const constraintsArr: Array<Constraint> = []
   constraintsArr.push(new Constraint('name', ConstraintType.Equals, 'cc'))
   constraintsArr.push(new Constraint('class', ConstraintType.IsEmpty, ''))
@@ -13,7 +12,7 @@ describe('test searchRequest', () => {
 
   const assert = `constraints=[{"key":"name","constraint_type":"equals","value":"cc"},{"key":"class","constraint_type":"is_empty","value":""}]`
 
-  test('API ROUTEのテスト GET', async () => {
+  test('normal pattern', async () => {
     expect.hasAssertions()
     const encode = searchRequest.encodeParams()
     expect(encode).toStrictEqual(assert)
