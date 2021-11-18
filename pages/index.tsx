@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
 import useSWR from 'swr'
 
 const fetcher = (...args: any[]) =>
@@ -8,7 +7,7 @@ const fetcher = (...args: any[]) =>
 
 const Home: NextPage = () => {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>BubbleQL</title>
         <meta
@@ -18,11 +17,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main className="">
         <Bubble />
       </main>
 
-      <footer className={styles.footer}></footer>
+      <footer></footer>
     </div>
   )
 }
