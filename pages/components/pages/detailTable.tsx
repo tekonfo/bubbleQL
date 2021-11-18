@@ -1,8 +1,8 @@
 // ReactDOM.createPortal()の第一引数に指定するコンポーネントです。
 // Atomic Designのpages層に相当しますが、ただtemplatesを呼び出すだけのwrapperとなっています。
-import Head from 'next/head'
 import useSWR from 'swr'
 import Footer from '../organisms/footer'
+import MetaHead from '../organisms/head'
 import Header from '../organisms/header'
 
 const fetcher = (...args: any[]) =>
@@ -11,22 +11,15 @@ const fetcher = (...args: any[]) =>
 export default function DetailTable() {
   return (
     <div>
-      <Head>
-        <title>BubbleQL</title>
-        <meta
-          name="description"
-          content="This is a db client of Bubble like Airtable"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <MetaHead />
 
-      <Header></Header>
+      <Header />
 
       <main>
         <Bubble />
       </main>
 
-      <Footer></Footer>
+      <Footer />
     </div>
   )
 }
