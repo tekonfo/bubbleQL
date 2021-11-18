@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import BubbleResponse from './model/bubble/dataResponse'
 import Bubble from './model/bubble/Bubble'
+import BubbleResponse from './model/bubble/dataResponse'
 
 type Data = {
   name: string
