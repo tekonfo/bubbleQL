@@ -1,11 +1,14 @@
 ## Table
 
 - type
-- Record
+- Records
+- URL
+- colmuns
 
 ## Record
 
-レコード達
+- id
+- それぞれのレコードの情報達
 
 ## View クラス
 
