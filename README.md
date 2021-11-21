@@ -32,6 +32,17 @@ yarn dev
 
 ## Develop
 
+### Architecture
+
+- Atmic Design を採用
+
+### ロジックの書き方
+
+- SWR を使って同一リクエストを違うページで行い、都度キャッシュさせる？
+  - props のバケツリレーをしたくない。
+    https://swr.vercel.app/ja/docs/getting-started
+    これを見る限りそれで大丈夫そう
+
 ### HOW to find icon
 
 https://react-icons.github.io/react-icons

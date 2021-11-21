@@ -6,9 +6,9 @@ export default function Table({ children }: { children?: React.ReactNode }) {
   return (
     <table>
       <TableThead>
-        <TableTr>{th}</TableTr>
+        <TableTr></TableTr>
       </TableThead>
-      <TableTbody>{trs}</TableTbody>
+      <TableTbody></TableTbody>
     </table>
   )
 }
