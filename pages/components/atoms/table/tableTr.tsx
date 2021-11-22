@@ -1,15 +1,12 @@
 import React from 'react'
 import useSWR from 'swr'
-import Routing from '../../../api/routing'
+import { BubbleRouting } from '../../../api/routing'
 import TableTh from './tableTh'
 
-// TODO: これもUtilクラスなどに移譲する
-const fetcher = (...args: any[]) =>
-  fetch(args[0], args[1]).then(res => res.json())
-
 export default function TableTr({ children }: { children?: React.ReactNode }) {
+  const routing = new BubbleRouting()
   // ここのdataがany担っているの良くない
-  const { data, error } = useSWR(Routing.bubbleBasic, fetcher)
+  const { data, error } = useSWR(routing.route(), routing.fetcher)
 
   if (error || !data || data.results.length == 0) return <Tr></Tr>
   const results = data.results

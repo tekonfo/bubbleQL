@@ -2,14 +2,14 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import Bubble from './model/bubble/Bubble'
 import BubbleResponse from './model/bubble/dataResponse'
 
-export type Data = {
+export type BubbleBasicData = {
   name: string
   results: object
 }
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>,
+  res: NextApiResponse<BubbleBasicData>,
 ) {
   const bubble = new Bubble('try-plugin', '', true)
   const studentUrl = bubble.getDataEndpoint('student')
