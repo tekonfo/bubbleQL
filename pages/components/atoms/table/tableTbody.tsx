@@ -1,7 +1,7 @@
 import React from 'react'
 import useSWR from 'swr'
+import Routing from '../../../api/routing'
 import TableTd from './tableTd'
-import TableTh from './tableTh'
 import TableTr from './tableTr'
 
 const fetcher = (...args: any[]) =>
@@ -12,22 +12,20 @@ export default function TableTbody({
 }: {
   children?: React.ReactNode
 }) {
-  const { data, error } = useSWR('/api/bubble', fetcher)
+  const { data, error } = useSWR(Routing.bubbleBasic, fetcher)
 
-  if (error) return <Tbody></Tbody>
-  if (!data) return <Tbody></Tbody>
+  if (error || !data || data.results.length == 0) return <Tbody></Tbody>
+  const results = data.results
 
-  // データをレンダリングする
-  if (data.length == 0) return <Tbody></Tbody>
-  const keys: Array<string> = Object.keys(data[0])
+  const keys: Array<string> = Object.keys(results[0])
   const trs = []
-  for (const res of data) {
+  for (const res of results) {
     const td = keys.map(k => <TableTd key={k}>{res[k]}</TableTd>)
     const tr = <TableTr>{td}</TableTr>
     trs.push(tr)
   }
 
-  return <Tbody>{children}</Tbody>
+  return <Tbody>{trs}</Tbody>
 }
 
 function Tbody({ children }: { children?: React.ReactNode }) {

@@ -1,20 +1,21 @@
 import React from 'react'
 import useSWR from 'swr'
+import Routing from '../../../api/routing'
 import TableTh from './tableTh'
 
+// TODO: これもUtilクラスなどに移譲する
 const fetcher = (...args: any[]) =>
   fetch(args[0], args[1]).then(res => res.json())
 
 export default function TableTr({ children }: { children?: React.ReactNode }) {
-  const { data, error } = useSWR('/api/bubble', fetcher)
+  // ここのdataがany担っているの良くない
+  const { data, error } = useSWR(Routing.bubbleBasic, fetcher)
 
-  if (error) return <Tr></Tr>
-  if (!data) return <Tr></Tr>
+  if (error || !data || data.results.length == 0) return <Tr></Tr>
+  const results = data.results
 
-  // データをレンダリングする
-  if (data.length == 0) return <Tr></Tr>
   // TODO: keyを全部の行のsetにする
-  const keys: Array<string> = Object.keys(data[0])
+  const keys: Array<string> = Object.keys(results[0])
   const th = keys.map(key => <TableTh key={key}>{key}</TableTh>)
 
   return <Tr>{th}</Tr>

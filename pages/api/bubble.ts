@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import Bubble from './model/bubble/Bubble'
 import BubbleResponse from './model/bubble/dataResponse'
 
-type Data = {
+export type Data = {
   name: string
   results: object
 }
