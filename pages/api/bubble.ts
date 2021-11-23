@@ -4,7 +4,7 @@ import BubbleResponse from './model/bubble/dataResponse'
 
 export type BubbleBasicData = {
   name: string
-  results: Array<object>
+  results: Array<Map<string, string>>
 }
 
 export default async function handler(

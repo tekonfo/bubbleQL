@@ -2,7 +2,7 @@
   "name": "bubbleql",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 3001",
+    "dev": "NODE_OPTIONS=’–inspect’ next dev --port 3001",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
