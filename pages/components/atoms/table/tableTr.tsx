@@ -8,7 +8,8 @@ export default function TableTr({ children }: { children?: React.ReactNode }) {
   // ここのdataがany担っているの良くない
   const { data, error } = useSWR(routing.route(), routing.fetcher)
 
-  if (error || !data || data.results.length == 0) return <Tr></Tr>
+  if (error || !data) return <Tr></Tr>
+  if (!routing.isBubbleBasicData(data)) return <Tr></Tr>
   const results = data.results
 
   // TODO: keyを全部の行のsetにする
