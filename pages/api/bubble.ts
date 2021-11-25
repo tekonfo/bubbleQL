@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import Bubble from './model/bubble/Bubble'
 import BubbleResponse from './model/bubble/dataResponse'
 
-export type BubbleBasicData = {
+export interface BubbleBasicData {
   name: string
   results: Array<Map<string, string>>
 }
