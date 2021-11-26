@@ -1,3 +1,7 @@
+import { NextApiRequest, NextApiResponse } from 'next'
+import httpMocks from 'node-mocks-http'
+
+import handler from '../../../pages/api/bubble'
 import Bubble from '../../../pages/api/model/bubble/Bubble'
 import { BubbleRouting } from '../../../pages/api/routing'
 
@@ -15,5 +19,16 @@ describe('next-test-api-route-handler test', () => {
 
 describe('', () => {
   const routing = new BubbleRouting()
-  test
+
+  test('400', async () => {
+    const mockReq = httpMocks.createRequest<NextApiRequest>({
+      query: {
+        animal: 'cat',
+      },
+    })
+    const mockRes = httpMocks.createResponse<NextApiResponse>()
+
+    await handler(mockReq, mockRes)
+    expect(mockRes.statusCode).toEqual(200)
+  })
 })
