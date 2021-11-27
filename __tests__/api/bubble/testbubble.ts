@@ -1,5 +1,7 @@
+import got from 'got'
+import fetchMock from 'jest-fetch-mock'
 import { NextApiRequest, NextApiResponse } from 'next'
-import httpMocks from 'node-mocks-http'
+import nock from 'nock'
 
 import handler from '../../../pages/api/bubble'
 import Bubble from '../../../pages/api/model/bubble/Bubble'
@@ -18,17 +20,30 @@ describe('next-test-api-route-handler test', () => {
 })
 
 describe('', () => {
+  beforeEach(() => {
+    fetchMock.resetMocks()
+  })
+
   const routing = new BubbleRouting()
 
-  test('400', async () => {
-    const mockReq = httpMocks.createRequest<NextApiRequest>({
-      query: {
-        animal: 'cat',
+  fetchMock.mockResponseOnce(JSON.stringify({ data: 12345 }))
+
+  const scope = nock('https://api.github.com')
+    .get('/repos/atom/atom/license')
+    .reply(200, {
+      license: {
+        key: 'mit',
+        name: 'MIT License',
+        spdx_id: 'MIT',
+        url: 'https://api.github.com/licenses/mit',
+        node_id: 'MDc6TGljZW5zZTEz',
       },
     })
-    const mockRes = httpMocks.createResponse<NextApiResponse>()
 
-    await handler(mockReq, mockRes)
-    expect(mockRes.statusCode).toEqual(200)
+  const url = 'https://api.github.com/repos/atom/atom/license'
+
+  test('400', async () => {
+    const res = await got.get(url)
+    console.log(res.body)
   })
 })

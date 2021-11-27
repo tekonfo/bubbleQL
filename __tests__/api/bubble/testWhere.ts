@@ -5,6 +5,7 @@ import Bubble from '../../../pages/api/model/bubble/Bubble'
 describe('next-test-api-route-handler test', () => {
   const bubble = new Bubble('try-plugin', '', true)
   const url = bubble.getDataEndpoint('test')
+  test('pass', async () => {})
 
   // TODO: testをmock化しないとリクエストが流れまくる
   // test('API ROUTEのテスト GET', async () => {
