@@ -2,48 +2,44 @@ import got from 'got'
 import fetchMock from 'jest-fetch-mock'
 import { NextApiRequest, NextApiResponse } from 'next'
 import nock from 'nock'
-
+import httpMocks from 'node-mocks-http'
 import handler from '../../../pages/api/bubble'
 import Bubble from '../../../pages/api/model/bubble/Bubble'
 import { BubbleRouting } from '../../../pages/api/routing'
+
+const baseUrl = 'https://try-plugin.bubbleapps.io/version-test/api/1.1/obj'
+const testUrl =
+  'https://try-plugin.bubbleapps.io/version-test/api/1.1/obj/student'
 
 describe('next-test-api-route-handler test', () => {
   const bubble = new Bubble('try-plugin', '', true)
 
   test('API ROUTEのテスト GET', async () => {
     expect.hasAssertions()
-    const url = bubble.getDataEndpoint('test')
-    expect(url).toStrictEqual(
-      'https://try-plugin.bubbleapps.io/version-test/api/1.1/obj/test',
-    )
+    const url = bubble.getDataEndpoint('student')
+    expect(url).toStrictEqual(testUrl)
   })
 })
 
 describe('', () => {
-  beforeEach(() => {
-    fetchMock.resetMocks()
-  })
-
   const routing = new BubbleRouting()
+  const route = routing.route()
+  const mockReq = httpMocks.createRequest<NextApiRequest>({})
+  const mockRes = httpMocks.createResponse<NextApiResponse>()
 
-  fetchMock.mockResponseOnce(JSON.stringify({ data: 12345 }))
-
-  const scope = nock('https://api.github.com')
-    .get('/repos/atom/atom/license')
+  nock(baseUrl)
+    .get('/student')
     .reply(200, {
-      license: {
-        key: 'mit',
-        name: 'MIT License',
-        spdx_id: 'MIT',
-        url: 'https://api.github.com/licenses/mit',
-        node_id: 'MDc6TGljZW5zZTEz',
+      response: {
+        cursor: 0,
+        results: [{ _id: 'aaaaa' }, { _id: 'bbbbb' }],
+        remaining: 0,
+        count: 12,
       },
     })
 
-  const url = 'https://api.github.com/repos/atom/atom/license'
-
-  test('400', async () => {
-    const res = await got.get(url)
-    console.log(res.body)
+  test('200', async () => {
+    await handler(mockReq, mockRes)
+    console.log(mockRes.json)
   })
 })
