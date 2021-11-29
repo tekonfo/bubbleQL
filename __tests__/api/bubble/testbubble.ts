@@ -1,11 +1,12 @@
-import got from 'got'
-import fetchMock from 'jest-fetch-mock'
+import axios from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
 import nock from 'nock'
 import httpMocks from 'node-mocks-http'
 import handler from '../../../pages/api/bubble'
 import Bubble from '../../../pages/api/model/bubble/Bubble'
 import { BubbleRouting } from '../../../pages/api/routing'
+
+jest.mock('axios')
 
 const baseUrl = 'https://try-plugin.bubbleapps.io/version-test/api/1.1/obj'
 const testUrl =
@@ -22,21 +23,25 @@ describe('next-test-api-route-handler test', () => {
 })
 
 describe('', () => {
+  const users = [{ name: 'Bob' }]
+  const resp = { data: users }
+  axios.get.mockResolvedValue(resp)
+
   const routing = new BubbleRouting()
   const route = routing.route()
   const mockReq = httpMocks.createRequest<NextApiRequest>({})
   const mockRes = httpMocks.createResponse<NextApiResponse>()
 
-  nock(baseUrl)
-    .get('/student')
-    .reply(200, {
-      response: {
-        cursor: 0,
-        results: [{ _id: 'aaaaa' }, { _id: 'bbbbb' }],
-        remaining: 0,
-        count: 12,
-      },
-    })
+  // nock(baseUrl)
+  //   .get('/student')
+  //   .reply(200, {
+  //     response: {
+  //       cursor: 0,
+  //       results: [{ _id: 'aaaaa' }, { _id: 'bbbbb' }],
+  //       remaining: 0,
+  //       count: 12,
+  //     },
+  //   })
 
   test('200', async () => {
     await handler(mockReq, mockRes)

@@ -30,6 +30,12 @@ npm run dev
 yarn dev
 ```
 
+## test
+
+```
+npm test
+```
+
 ## Develop
 
 ### Architecture
