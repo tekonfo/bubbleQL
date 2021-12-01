@@ -1,4 +1,4 @@
-import axios from 'axios'
+import got from 'got'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Bubble from './model/bubble/Bubble'
 import BubbleResponse from './model/bubble/dataResponse'
@@ -13,9 +13,10 @@ export default async function handler(
 ) {
   const bubble = new Bubble('try-plugin', '', true)
   const studentUrl = bubble.getDataEndpoint('student')
-  const response = await axios(studentUrl, { responseType: 'json' })
-  const data: any = await response.data
-  const r = new BubbleResponse(data)
+  const r = await got.get<any>(studentUrl, {
+    responseType: 'json',
+  })
+  const data = new BubbleResponse(r.body)
 
-  res.status(200).json({ name: r.count.toString(), results: r.results })
+  res.status(200).json({ name: data.count.toString(), results: data.results })
 }

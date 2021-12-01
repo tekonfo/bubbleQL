@@ -4,10 +4,11 @@ export default class BubbleResponse {
   count: number
   results: any
 
-  constructor(json: any) {
-    this.cursor = json['response']['cursor']
-    this.results = json['response']['results']
-    this.remaining = json['response']['remaining']
-    this.count = json['response']['count']
+  constructor(data: any) {
+    console.log(data)
+    this.cursor = data['response']['cursor']
+    this.results = data['response']['results']
+    this.remaining = data['response']['remaining']
+    this.count = data['response']['count']
   }
 }
