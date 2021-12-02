@@ -18,6 +18,7 @@ export default function TableTbody({
   const keys: Array<string> = getKeys(data.results)
   const trs = []
   for (const res of data.results) {
+    console.log(res)
     const td = keys.map(k => <TableTd key={k}>{res.get(k)}</TableTd>)
     const tr = <TableTr></TableTr>
     trs.push(tr)

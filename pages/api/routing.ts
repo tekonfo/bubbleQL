@@ -10,9 +10,11 @@ export class BubbleRouting extends Routing {
   }
   async fetcher(...args: any[]): Promise<BubbleBasicData | null> {
     const response = await fetch(args[0], args[1])
-    const json: BubbleBasicData = await response.json()
+    // これ単純にinterfaceで教えてあげるだけだと理解しないんだな
+    const json = await response.json()
     if (json === null) return null
-    return json
+    const data: BubbleBasicData = new BubbleBasicData(json)
+    return data
   }
 
   isBubbleBasicData = (item: any): item is BubbleBasicData => {

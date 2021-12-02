@@ -5,7 +5,6 @@ export default class BubbleResponse {
   results: any
 
   constructor(data: any) {
-    console.log(data)
     this.cursor = data['response']['cursor']
     this.results = data['response']['results']
     this.remaining = data['response']['remaining']
