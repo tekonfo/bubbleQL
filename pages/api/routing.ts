@@ -13,8 +13,9 @@ export class BubbleRouting extends Routing {
     // これ単純にinterfaceで教えてあげるだけだと理解しないんだな
     const json = await response.json()
     if (json === null) return null
-    const data: BubbleBasicData = new BubbleBasicData(json)
-    return data
+    // これがどうやらサーバーサイドのコードなので、落ちている。
+    // const data: BubbleBasicData = new BubbleBasicData(json)
+    return json
   }
 
   isBubbleBasicData = (item: any): item is BubbleBasicData => {

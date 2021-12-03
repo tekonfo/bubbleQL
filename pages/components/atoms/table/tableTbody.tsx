@@ -17,14 +17,14 @@ export default function TableTbody({
 
   const keys: Array<string> = getKeys(data.results)
   const trs = []
+  let count = 0
   for (const res of data.results) {
-    console.log(res)
-    const td = keys.map(k => <TableTd key={k}>{res.get(k)}</TableTd>)
-    const tr = <TableTr></TableTr>
+    const td = keys.map(k => <TableTd key={k}>{res[k]}</TableTd>)
+    const tr = <TableTr key={count++}>{td}</TableTr>
     trs.push(tr)
   }
 
-  return <Tbody>{}</Tbody>
+  return <Tbody>{trs}</Tbody>
 }
 
 function Tbody({ children }: { children?: React.ReactNode }) {

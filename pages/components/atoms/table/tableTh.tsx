@@ -1,3 +1,3 @@
-export default function TableTh({ children }: { children?: React.ReactNode }) {
-  return <th>{children}</th>
+export default function TableTh({ value }: { value?: string }) {
+  return <th key={value}>{value}</th>
 }
