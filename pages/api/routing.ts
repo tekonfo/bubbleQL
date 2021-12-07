@@ -17,6 +17,7 @@ export class BubbleRouting extends Routing {
     // const data: BubbleBasicData = new BubbleBasicData(json)
     return json
   }
+  getKeys() {}
 
   isBubbleBasicData = (item: any): item is BubbleBasicData => {
     return item !== null && item !== undefined

@@ -1,11 +1,13 @@
 import { useTable, Column } from 'react-table'
+import useSWR from 'swr'
+import { BubbleRouting } from '../../api/routing'
 import BubbleTable from '../organisms/bubbleTable'
 import Footer from '../organisms/footer'
 import MetaHead from '../organisms/head'
 import Header from '../organisms/header'
 import Main from '../organisms/main'
 
-const columns: Column<Data>[] = [
+const columns: any = [
   {
     Header: '名前',
     accessor: 'name',
@@ -16,12 +18,7 @@ const columns: Column<Data>[] = [
   },
 ]
 
-interface Data {
-  name: string
-  age: number
-}
-
-const data: Data[] = [
+const data = [
   {
     name: 'John',
     age: 23,
@@ -33,8 +30,11 @@ const data: Data[] = [
 ]
 
 export default function DetailTableTemplate() {
+  const routing = new BubbleRouting()
+  // const { data, error } = useSWR(routing.route(), routing.fetcher)
+
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable<Data>({ columns, data })
+    useTable({ columns, data })
 
   return (
     <div>
