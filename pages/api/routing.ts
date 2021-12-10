@@ -1,4 +1,5 @@
 import { BubbleBasicData } from './bubble'
+import { getFetch } from './util/fetch'
 abstract class Routing {
   abstract route(): string
   abstract fetcher(): any
@@ -9,7 +10,9 @@ export class BubbleRouting extends Routing {
     return '/api/bubble'
   }
   async fetcher(...args: any[]): Promise<BubbleBasicData | null> {
+    const fetch = getFetch()
     const response = await fetch(args[0], args[1])
+    console.log(response)
     // これ単純にinterfaceで教えてあげるだけだと理解しないんだな
     const json = await response.json()
     if (json === null) return null

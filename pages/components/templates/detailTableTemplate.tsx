@@ -1,5 +1,6 @@
 import { useTable, Column } from 'react-table'
 import useSWR from 'swr'
+import { BubbleBasicData } from '../../api/bubble'
 import { BubbleRouting } from '../../api/routing'
 import BubbleService from '../../services/bubbleService'
 import BubbleTable from '../organisms/bubbleTable'
@@ -30,14 +31,22 @@ const bbbb: any = [
   },
 ]
 
-export default function DetailTableTemplate() {
-  // const routing = new BubbleRouting()
-  // const { data, error } = useSWR(routing.route(), routing.fetcher)
+export async function getServerSideProps(context: any) {
+  const routing = new BubbleRouting()
+  const res = await fetch('/api/bubble')
+  console.log(res)
+  // const data = await routing.fetcher(routing.route())
   // const bubbleBasicData = routing.returnBubbleBasicData(data)
 
-  // const bubbleService = new BubbleService()
-  // const columns = bubbleService.getKeys(bubbleBasicData.results)
-  // const body = bubbleService.getBody(bubbleBasicData.results)
+  return {
+    props: { res }, // will be passed to the page component as props
+  }
+}
+
+export default function DetailTableTemplate(bubbleBasicData: BubbleBasicData) {
+  const bubbleService = new BubbleService()
+  const columns = bubbleService.getKeys(bubbleBasicData.results)
+  const body = bubbleService.getBody(bubbleBasicData.results)
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data: bbbb })
@@ -48,9 +57,7 @@ export default function DetailTableTemplate() {
 
       <Header />
 
-      <Main>
-        <BubbleTable />
-      </Main>
+      <Main></Main>
 
       <Footer />
       <table {...getTableProps()}>

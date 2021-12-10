@@ -1,5 +1,6 @@
 export default class BubbleService {
   getKeys(lists: Array<object>): Array<any> {
+    if (!lists) return []
     if (lists.length == 0) return []
     // TODO: keyを全部の行のsetにする
     const keys: Array<string> = Object.keys(lists[0])
