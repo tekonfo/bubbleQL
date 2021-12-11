@@ -31,22 +31,32 @@ const bbbb: any = [
   },
 ]
 
-export async function getServerSideProps(context: any) {
-  const routing = new BubbleRouting()
-  const res = await fetch('/api/bubble')
-  console.log(res)
-  // const data = await routing.fetcher(routing.route())
-  // const bubbleBasicData = routing.returnBubbleBasicData(data)
+// export async function getServerSideProps(context: any) {
+//   console.log('hogehoge')
+//   const routing = new BubbleRouting()
+//   const res = await fetch('/api/bubble')
+//   const data = await res.json()
+//   console.log(res)
+//   const bubbleBasicData = routing.returnBubbleBasicData(res)
 
-  return {
-    props: { res }, // will be passed to the page component as props
-  }
-}
+//   return {
+//     props: { data: 'new' }, // will be passed to the page component as props
+//   }
+// }
 
-export default function DetailTableTemplate(bubbleBasicData: BubbleBasicData) {
+// export async function getStaticProps() {
+//   const res = await fetch(`https://jsonplaceholder.typicode.com/posts`)
+//   const posts = await res.json()
+//   console.log(posts)
+//   return { props: { posts } }
+// }
+
+export default function DetailTableTemplate({ posts }: any) {
   const bubbleService = new BubbleService()
-  const columns = bubbleService.getKeys(bubbleBasicData.results)
-  const body = bubbleService.getBody(bubbleBasicData.results)
+  const columns = bubbleService.getKeys(posts)
+  const body = bubbleService.getBody(posts)
+  console.log(posts)
+  console.log('hogehogehogehoge')
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data: bbbb })
