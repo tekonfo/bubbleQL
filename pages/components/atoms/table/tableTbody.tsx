@@ -1,6 +1,6 @@
 import React from 'react'
 import useSWR from 'swr'
-import { BubbleRouting } from '../../../api/routing'
+import { BubbleRouting } from '../../../routing/routing'
 import TableTd from './tableTd'
 import TableTr, { getKeys } from './tableTr'
 
