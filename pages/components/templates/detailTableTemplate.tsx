@@ -1,9 +1,7 @@
 import { useTable, Column } from 'react-table'
 import useSWR from 'swr'
-import { BubbleBasicData } from '../../api/bubble'
-import { BubbleRouting } from '../../api/routing'
+import { BubbleRouting } from '../../routing/routing'
 import BubbleService from '../../services/bubbleService'
-import BubbleTable from '../organisms/bubbleTable'
 import Footer from '../organisms/footer'
 import MetaHead from '../organisms/head'
 import Header from '../organisms/header'
@@ -52,14 +50,17 @@ const bbbb: any = [
 // }
 
 export default function DetailTableTemplate({ posts }: any) {
-  const bubbleService = new BubbleService()
-  const columns = bubbleService.getKeys(posts)
-  const body = bubbleService.getBody(posts)
-  console.log(posts)
-  console.log('hogehogehogehoge')
+  const routing = new BubbleRouting()
+  const { data, error } = useSWR(routing.route(), routing.fetcher)
 
+  const bubbleService = new BubbleService()
+  const columns = bubbleService.getKeys(data?.results)
+  const body = bubbleService.getBody(data?.results)
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data: bbbb })
+    useTable({ columns, data: body })
+
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
 
   return (
     <div>
@@ -70,7 +71,7 @@ export default function DetailTableTemplate({ posts }: any) {
       <Main></Main>
 
       <Footer />
-      <table {...getTableProps()}>
+      {/* <table {...getTableProps()}>
         <thead>
           {headerGroups.map(headerGroup => (
             // eslint-disable-next-line react/jsx-key
@@ -96,7 +97,7 @@ export default function DetailTableTemplate({ posts }: any) {
             )
           })}
         </tbody>
-      </table>
+      </table> */}
     </div>
   )
 }
