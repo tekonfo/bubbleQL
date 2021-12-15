@@ -1,14 +1,22 @@
 import type { NextPage } from 'next'
-import useSWR from 'swr'
+import React, { createContext, useState, Dispatch } from 'react'
 import DetailTable from './components/pages/detailTable'
-import { BubbleRouting } from './routing/routing'
+
+export const UserCount = createContext(
+  {} as {
+    count: number
+    setCount: React.Dispatch<React.SetStateAction<number>>
+  },
+)
 
 const Home: NextPage = () => {
+  const [count, setCount] = useState(100)
+  const value = { count, setCount }
   return (
     <>
-      <DetailTable></DetailTable>
-      {/* <button onClick={getData}>test</button>
-      <button onClick={getData}>{data.name}</button> */}
+      <UserCount.Provider value={value}>
+        <DetailTable></DetailTable>
+      </UserCount.Provider>
     </>
   )
 }

@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useContext } from 'react'
 import { useTable } from 'react-table'
 import useSWR from 'swr'
+import { UserCount } from '../../index'
 import { BubbleRouting } from '../../routing/routing'
 import BubbleService from '../../services/bubbleService'
 import Footer from '../organisms/footer'
@@ -19,6 +20,8 @@ export default function DetailTableTemplate({ posts }: any) {
   const columns = useMemo(() => columnsData, [])
   const resData = useMemo(() => bodyData, [])
 
+  const { count, setCount } = useContext(UserCount)
+
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data: resData })
 
@@ -34,6 +37,14 @@ export default function DetailTableTemplate({ posts }: any) {
       <Main></Main>
 
       <Footer />
+      <div>{count}</div>
+      <button
+        onClick={() => {
+          setCount(count + 1)
+        }}
+      >
+        plus
+      </button>
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map(headerGroup => (
