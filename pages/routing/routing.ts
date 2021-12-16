@@ -2,16 +2,16 @@ import { BubbleBasicData } from '../model/bubbleBasicData'
 import { getFetch } from '../util/fetch'
 abstract class Routing {
   abstract route(): string
-  abstract fetcher(): any
+  abstract fetcher(url: string): any
 }
 
 export class BubbleRouting extends Routing {
   route(): string {
-    return '/api/bubble'
+    return 'http://localhost:3000/api/bubble'
   }
-  async fetcher(...args: any[]): Promise<BubbleBasicData | null> {
+  async fetcher(url: string): Promise<BubbleBasicData | null> {
     const fetch = getFetch()
-    const response = await fetch(args[0], args[1])
+    const response = await fetch(url)
     const json = await response.json()
     if (json === null) return null
     return json
