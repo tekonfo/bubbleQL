@@ -1,5 +1,6 @@
-import { Dialog, DialogTitle, Typography } from '@mui/material'
+import { Dialog } from '@mui/material'
 import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
 import React from 'react'
 
 const emails = ['username@gmail.com', 'user02@gmail.com']
@@ -48,7 +49,9 @@ function SimpleDialog(props: SimpleDialogProps) {
 
   return (
     <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>Set backup account</DialogTitle>
+      <TextField></TextField>
+      <Button>Hide All</Button>
+      <Button>Show All</Button>
     </Dialog>
   )
 }
