@@ -30,7 +30,10 @@ const Home = ({
   const columns = useMemo(() => columnsData, [])
   const resData = useMemo(() => bodyData, [])
 
-  const tableIns: TableInstance<object> = useTable({ columns, data: resData })
+  const tableIns: TableInstance<object> = useTable({
+    columns,
+    data: resData,
+  })
 
   const [table, setTable] = useState(tableIns)
   const value = { table, setTable }
