@@ -5,7 +5,7 @@ import DetailTable from './components/pages/detailTable'
 import { BubbleRouting } from './routing/routing'
 import BubbleService from './services/bubbleService'
 
-export const BubbleTable = createContext(
+export const BubbleTableContext = createContext(
   {} as {
     table: TableInstance<object>
     setTable: React.Dispatch<React.SetStateAction<TableInstance<object>>>
@@ -36,9 +36,9 @@ const Home = ({
   const value = { table, setTable }
   return (
     <>
-      <BubbleTable.Provider value={value}>
+      <BubbleTableContext.Provider value={value}>
         <DetailTable></DetailTable>
-      </BubbleTable.Provider>
+      </BubbleTableContext.Provider>
     </>
   )
 }

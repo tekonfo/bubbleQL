@@ -1,17 +1,12 @@
 import React, { useContext } from 'react'
 import { BubbleTableContext } from '../../../index'
 
-export default function TableTbody({
-  children,
-}: {
-  children?: React.ReactNode
-}) {
-  const { table, setTable } = useContext(BubbleTableContext)
-
-  const { getTableBodyProps, rows, prepareRow } = table
+export default function TableRow({ children }: { children?: React.ReactNode }) {
+  const { table } = useContext(BubbleTableContext)
+  const { rows, prepareRow } = table
 
   return (
-    <Tbody {...getTableBodyProps()}>
+    <td>
       {rows.map((row, i) => {
         prepareRow(row)
         return (
@@ -24,10 +19,6 @@ export default function TableTbody({
           </tr>
         )
       })}
-    </Tbody>
+    </td>
   )
-}
-
-function Tbody({ children }: { children?: React.ReactNode }) {
-  return <tbody>{children}</tbody>
 }
