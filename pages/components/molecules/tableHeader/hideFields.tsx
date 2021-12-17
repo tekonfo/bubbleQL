@@ -1,7 +1,8 @@
 import { Dialog } from '@mui/material'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import React from 'react'
+import React, { useContext } from 'react'
+import { BubbleTableContext } from '../../..'
 
 const emails = ['username@gmail.com', 'user02@gmail.com']
 
@@ -41,6 +42,8 @@ export interface SimpleDialogProps {
 }
 
 function SimpleDialog(props: SimpleDialogProps) {
+  const { table } = useContext(BubbleTableContext)
+  const { getToggleHideAllColumnsProps, allColumns } = table
   const { onClose, selectedValue, open } = props
 
   const handleClose = () => {
@@ -50,6 +53,14 @@ function SimpleDialog(props: SimpleDialogProps) {
   return (
     <Dialog onClose={handleClose} open={open}>
       <TextField></TextField>
+      {allColumns.map(column => (
+        <div key={column.id}>
+          <label>
+            <input type="checkbox" {...column.getToggleHiddenProps()} />{' '}
+            {column.id}
+          </label>
+        </div>
+      ))}
       <Button>Hide All</Button>
       <Button>Show All</Button>
     </Dialog>
