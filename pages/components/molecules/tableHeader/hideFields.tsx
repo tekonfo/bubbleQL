@@ -1,7 +1,7 @@
 import { Dialog } from '@mui/material'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { BubbleTableContext } from '../../..'
 
 const emails = ['username@gmail.com', 'user02@gmail.com']
@@ -42,6 +42,8 @@ export interface SimpleDialogProps {
 }
 
 function SimpleDialog(props: SimpleDialogProps) {
+  const [columnNameText, setColumnNameText] = useState('')
+
   const { table } = useContext(BubbleTableContext)
   const { getToggleHideAllColumnsProps, allColumns } = table
   const { onClose, selectedValue, open } = props
@@ -50,19 +52,31 @@ function SimpleDialog(props: SimpleDialogProps) {
     onClose(selectedValue)
   }
 
+  const handleInputChange = (e: any) => {
+    const target = e.target
+    const value = target.type === 'checkbox' ? target.checked : target.value
+    setColumnNameText(value)
+  }
+
   return (
     <Dialog onClose={handleClose} open={open}>
-      <TextField></TextField>
-      {allColumns.map(column => (
-        <div key={column.id}>
-          <label>
-            <input type="checkbox" {...column.getToggleHiddenProps()} />{' '}
-            {column.id}
-          </label>
-        </div>
-      ))}
-      <Button>Hide All</Button>
-      <Button>Show All</Button>
+      <TextField onChange={handleInputChange} />
+      <div>
+        <input type="checkbox" {...getToggleHideAllColumnsProps()} />
+        Toggl All
+      </div>
+      {allColumns
+        .filter(col =>
+          columnNameText == '' ? true : col.id.match(columnNameText),
+        )
+        .map(column => (
+          <div key={column.id}>
+            <label>
+              <input type="checkbox" {...column.getToggleHiddenProps()} />{' '}
+              {column.id}
+            </label>
+          </div>
+        ))}
     </Dialog>
   )
 }
