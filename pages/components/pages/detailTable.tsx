@@ -8,11 +8,11 @@ import BubbleService from '../../services/bubbleService'
 import DetailTableTemplate from '../templates/detailTableTemplate'
 
 export default function DetailTable() {
-  let columnsData: any[] = []
-  let bodyData: any[] = []
+  const [columnsData, setColumnsData] = useState([] as any[])
+  const [bodyData, setBodyData] = useState([] as any[])
 
-  const columns = useMemo(() => columnsData, [])
-  const resData = useMemo(() => bodyData, [])
+  const columns = useMemo(() => columnsData, [columnsData])
+  const resData = useMemo(() => bodyData, [bodyData])
 
   const tableIns: TableInstance<object> = useTable({
     columns,
@@ -24,7 +24,6 @@ export default function DetailTable() {
 
   useEffect(() => {
     const getData = async () => {
-      console.log('test')
       const routing = new BubbleRouting({
         apiToken: '',
         workFlowApiUrl: '',
@@ -33,10 +32,9 @@ export default function DetailTable() {
       })
       const data = await routing.fetcher(routing.route())
       const bubbleService = new BubbleService()
-      columnsData = bubbleService.getKeys(data?.results)
-      bodyData = bubbleService.getBody(data?.results)
+      setBodyData(bubbleService.getBody(data?.results))
+      setColumnsData(bubbleService.getKeys(data?.results))
     }
-    console.log('test')
     getData()
   }, [])
 
