@@ -1,4 +1,5 @@
 import { BubbleBasicData } from '../model/bubbleBasicData'
+import { BubbleApplicationContextType } from '../store/bubbleProjectContext'
 import { getFetch } from '../util/fetch'
 abstract class Routing {
   abstract route(): string
@@ -6,12 +7,19 @@ abstract class Routing {
 }
 
 export class BubbleRouting extends Routing {
+  applicationContext: BubbleApplicationContextType
+  constructor(context: BubbleApplicationContextType) {
+    super()
+    this.applicationContext = context
+  }
   route(): string {
     return 'http://localhost:3000/api/bubble'
   }
   async fetcher(url: string): Promise<BubbleBasicData | null> {
     const fetch = getFetch()
     const response = await fetch(url)
+    // ちょっと面倒なので直接fetchする。API routesつかわない
+
     const json = await response.json()
     if (json === null) return null
     return json

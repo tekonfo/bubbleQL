@@ -1,11 +1,11 @@
 import { createContext } from 'react'
-
+export type BubbleApplicationContextType = {
+  apiToken: string
+  workFlowApiUrl: string
+  dataApiUrl: string
+  enableDataTables: Array<string>
+}
 // これの登録がない場合は、リダイレクトするとかしたい
-export const BubbleTableContext = createContext(
-  {} as {
-    apiToken: string
-    workFlowApiUrl: string
-    dataApiUrl: string
-    enableDataTables: Array<string>
-  },
+export const BubbleApplicationContext = createContext(
+  {} as BubbleApplicationContextType,
 )

@@ -4,6 +4,7 @@ import { TableInstance, useTable } from 'react-table'
 import DetailTable from './components/pages/detailTable'
 import { BubbleRouting } from './routing/routing'
 import BubbleService from './services/bubbleService'
+import { BubbleApplicationContext } from './store/bubbleProjectContext'
 
 export const BubbleTableContext = createContext(
   {} as {
@@ -12,36 +13,19 @@ export const BubbleTableContext = createContext(
   },
 )
 
-export async function getServerSideProps(context: any) {
-  const routing = new BubbleRouting()
-  const data = await routing.fetcher(routing.route())
-  return {
-    props: { data }, // will be passed to the page component as props
+const Home = () => {
+  const bubbleApplicationContext = {
+    apiToken: '',
+    workFlowApiUrl: '',
+    dataApiUrl: '',
+    enableDataTables: [],
   }
-}
 
-const Home = ({
-  data,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const bubbleService = new BubbleService()
-  const columnsData = bubbleService.getKeys(data?.results)
-  const bodyData = bubbleService.getBody(data?.results)
-
-  const columns = useMemo(() => columnsData, [])
-  const resData = useMemo(() => bodyData, [])
-
-  const tableIns: TableInstance<object> = useTable({
-    columns,
-    data: resData,
-  })
-
-  const [table, setTable] = useState(tableIns)
-  const value = { table, setTable }
   return (
     <>
-      <BubbleTableContext.Provider value={value}>
+      <BubbleApplicationContext.Provider value={bubbleApplicationContext}>
         <DetailTable></DetailTable>
-      </BubbleTableContext.Provider>
+      </BubbleApplicationContext.Provider>
     </>
   )
 }
