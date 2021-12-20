@@ -1,9 +1,6 @@
-import type { InferGetServerSidePropsType } from 'next'
-import React, { createContext, useState, useMemo } from 'react'
-import { TableInstance, useTable } from 'react-table'
+import React, { createContext } from 'react'
+import { TableInstance } from 'react-table'
 import DetailTable from './components/pages/detailTable'
-import { BubbleRouting } from './routing/routing'
-import BubbleService from './services/bubbleService'
 import { BubbleApplicationContext } from './store/bubbleProjectContext'
 
 export const BubbleTableContext = createContext(
