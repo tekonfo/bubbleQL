@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { BubbleTableContext } from '../../..'
 
 export default function TableTr({ children }: { children?: React.ReactNode }) {
-  const { table, setTable } = useContext(BubbleTableContext)
+  const { table } = useContext(BubbleTableContext)
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     table
