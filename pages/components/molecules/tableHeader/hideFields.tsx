@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField'
 import React, { useContext, useState } from 'react'
 import { BubbleTableContext } from '../../..'
 
-const emails = ['username@gmail.com', 'user02@gmail.com']
+const emails = ['username@gmail.com']
 
 export default function HideFields({
   children,
