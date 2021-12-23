@@ -8,8 +8,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<BubbleBasicData>,
 ) {
-  const bubble = new Bubble('try-plugin', '', true)
-  const studentUrl = bubble.getDataEndpoint('student')
+  const { appName, apiToken, tableName, isTestMode } = req.query
+
+  if (appName instanceof Array<string>){
+
+  }
+  const bubble = new Bubble(appName, apiToken, isTestMode)
+  const studentUrl = bubble.getDataEndpoint(tableName)
   const r = await got.get<any>(studentUrl, {
     responseType: 'json',
   })

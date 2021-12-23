@@ -13,7 +13,15 @@ export class BubbleRouting extends Routing {
     this.applicationContext = context
   }
   route(): string {
-    return 'http://localhost:3000/api/bubble'
+    const params = {
+      appName: this.applicationContext.appName,
+      apiToken: this.applicationContext.apiToken,
+      // TODO: ここcontextで持つようにする
+      tableName: 'student',
+      isTestMode: this.applicationContext.isTestMode.toString(),
+    }
+    const query_params = new URLSearchParams(params)
+    return 'http://localhost:3000/api/bubble' + query_params
   }
   async fetcher(url: string): Promise<BubbleBasicData | null> {
     const fetch = getFetch()
