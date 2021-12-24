@@ -12,9 +12,11 @@ export const BubbleTableContext = createContext(
 
 const Home = () => {
   const bubbleApplicationContext = {
-    apiToken: '',
-    workFlowApiUrl: '',
-    dataApiUrl: '',
+    apiToken: 'aaa',
+    appName: 'try-plugin',
+    workFlowApiUrl: 'ccc',
+    dataApiUrl: 'bbb',
+    isTestMode: true,
     enableDataTables: [],
   }
 

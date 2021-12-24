@@ -10,10 +10,16 @@ export default async function handler(
 ) {
   const { appName, apiToken, tableName, isTestMode } = req.query
 
-  if (appName instanceof Array<string>){
-
+  if (
+    typeof appName !== 'string' ||
+    typeof apiToken !== 'string' ||
+    typeof Boolean(isTestMode) !== 'boolean' ||
+    typeof tableName !== 'string'
+  ) {
+    res.status(400).json({ name: 'error', results: [] })
+    return
   }
-  const bubble = new Bubble(appName, apiToken, isTestMode)
+  const bubble = new Bubble(appName, apiToken, Boolean(isTestMode))
   const studentUrl = bubble.getDataEndpoint(tableName)
   const r = await got.get<any>(studentUrl, {
     responseType: 'json',
