@@ -1,16 +1,10 @@
-import React, { createContext } from 'react'
-import { TableInstance } from 'react-table'
+import React from 'react'
 import DetailTable from './components/pages/detailTable'
 import { BubbleApplicationContext } from './store/bubbleProjectContext'
-
-export const BubbleTableContext = createContext(
-  {} as {
-    table: TableInstance<object>
-    setTable: React.Dispatch<React.SetStateAction<TableInstance<object>>>
-  },
-)
+import { BubbleTableSettingContext } from './store/bubbleTableSettingContext'
 
 const Home = () => {
+  // TODO: これは外部から設定できるようにする
   const bubbleApplicationContext = {
     apiToken: 'aaa',
     appName: 'try-plugin',
@@ -20,10 +14,14 @@ const Home = () => {
     enableDataTables: [],
   }
 
+  const bubbleTableSettingContext = { tableName: 'student' }
+
   return (
     <>
       <BubbleApplicationContext.Provider value={bubbleApplicationContext}>
-        <DetailTable></DetailTable>
+        <BubbleTableSettingContext.Provider value={bubbleTableSettingContext}>
+          <DetailTable></DetailTable>
+        </BubbleTableSettingContext.Provider>
       </BubbleApplicationContext.Provider>
     </>
   )

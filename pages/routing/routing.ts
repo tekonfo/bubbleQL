@@ -1,5 +1,6 @@
 import { BubbleBasicData } from '../model/bubbleBasicData'
 import { BubbleApplicationContextType } from '../store/bubbleProjectContext'
+import { BubbleTableSettingContextType } from '../store/bubbleTableSettingContext'
 import { getFetch } from '../util/fetch'
 abstract class Routing {
   abstract route(): string
@@ -8,16 +9,20 @@ abstract class Routing {
 
 export class BubbleRouting extends Routing {
   applicationContext: BubbleApplicationContextType
-  constructor(context: BubbleApplicationContextType) {
+  tableSettingContext: BubbleTableSettingContextType
+  constructor(
+    context: BubbleApplicationContextType,
+    tableContext: BubbleTableSettingContextType,
+  ) {
     super()
     this.applicationContext = context
+    this.tableSettingContext = tableContext
   }
   route(): string {
     const params = {
       appName: this.applicationContext.appName,
       apiToken: this.applicationContext.apiToken,
-      // TODO: ここcontextで持つようにする
-      tableName: 'student',
+      tableName: this.tableSettingContext.tableName,
       isTestMode: this.applicationContext.isTestMode.toString(),
     }
     const query_params = new URLSearchParams(params)
@@ -33,14 +38,6 @@ export class BubbleRouting extends Routing {
     return json
   }
   getKeys() {}
-
-  // TODO: THE・クソコード。Hooksの前で早期リターン出来ないらしいので、それに対しての暫定対応
-  returnBubbleBasicData(data: any): BubbleBasicData {
-    if (data === undefined) {
-      return new BubbleBasicData({})
-    }
-    return data
-  }
 
   isBubbleBasicData = (item: any): item is BubbleBasicData => {
     return item !== null && item !== undefined

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { BubbleTableContext } from '../../..'
+import { BubbleTableContext } from '../../../store/bubbleTableContext'
 import TableTbody from '../../atoms/table/tableTbody'
 import TableThead from '../../atoms/table/tableThead'
 import TableTr from '../../atoms/table/tableTr'

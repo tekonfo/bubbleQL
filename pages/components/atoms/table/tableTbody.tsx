@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { BubbleTableContext } from '../../../index'
+import { BubbleTableContext } from '../../../store/bubbleTableContext'
 
 export default function TableTbody({
   children,

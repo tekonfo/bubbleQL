@@ -2,10 +2,11 @@
 // Atomic Designのpages層に相当しますが、ただtemplatesを呼び出すだけのwrapperとなっています。
 import { useEffect, useMemo, useState, useContext } from 'react'
 import { TableInstance, useTable } from 'react-table'
-import { BubbleTableContext } from '../..'
 import { BubbleRouting } from '../../routing/routing'
 import BubbleService from '../../services/bubbleService'
 import { BubbleApplicationContext } from '../../store/bubbleProjectContext'
+import { BubbleTableContext } from '../../store/bubbleTableContext'
+import { BubbleTableSettingContext } from '../../store/bubbleTableSettingContext'
 import DetailTableTemplate from '../templates/detailTableTemplate'
 
 export default function DetailTable() {
@@ -24,18 +25,22 @@ export default function DetailTable() {
   const value = { table, setTable }
 
   const bubbleApplicationContext = useContext(BubbleApplicationContext)
+  const bubbleTableSettingContext = useContext(BubbleTableSettingContext)
 
   // bubbleApplicationContextに影響が出たら、更新する
   useEffect(() => {
     const getData = async () => {
-      const routing = new BubbleRouting(bubbleApplicationContext)
+      const routing = new BubbleRouting(
+        bubbleApplicationContext,
+        bubbleTableSettingContext,
+      )
       const data = await routing.fetcher(routing.route())
       const bubbleService = new BubbleService()
       setBodyData(bubbleService.getBody(data?.results))
       setColumnsData(bubbleService.getKeys(data?.results))
     }
     getData()
-  }, [bubbleApplicationContext])
+  }, [bubbleApplicationContext, bubbleTableSettingContext])
 
   return (
     <>
