@@ -31,8 +31,6 @@ export class BubbleRouting extends Routing {
   async fetcher(url: string): Promise<BubbleBasicData | null> {
     const fetch = getFetch()
     const response = await fetch(url)
-    // ちょっと面倒なので直接fetchする。API routesつかわない
-
     const json = await response.json()
     if (json === null) return null
     return json
