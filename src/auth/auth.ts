@@ -1,5 +1,5 @@
-import * as firebase from 'firebase/app'
-import 'firebase/auth' // If you need it
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/auth'
 
 export const config = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -11,33 +11,31 @@ export const config = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 }
 
-!firebase.getApps.length ? firebase.initializeApp(config) : firebase.app()
+!firebase.apps.length ? firebase.initializeApp(config) : firebase.app()
 
 export const auth = firebase.auth()
 export const Firebase = firebase
 
-export const Login = () => {
+export const Login = async () => {
   const provider = new firebase.auth.GoogleAuthProvider()
-  firebase
+  const result = await firebase
     .auth()
     .signInWithPopup(provider)
-    .then(function (result: any) {
-      return result
-    })
-    .catch(function (error) {
+    .catch(function (error: any) {
       console.log(error)
       const errorCode = error.code
       console.log(errorCode)
       const errorMessage = error.message
       console.log(errorMessage)
     })
+  console.log(result)
+  return result
 }
 
 // ログイン状態の検知
 export const listenAuthState = (dispatch: any) => {
   return firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      // User is signed in.
       dispatch({
         type: 'login',
         payload: {
@@ -45,8 +43,6 @@ export const listenAuthState = (dispatch: any) => {
         },
       })
     } else {
-      // User is signed out.
-      // ...
       dispatch({
         type: 'logout',
       })
