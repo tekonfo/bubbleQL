@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { listenAuthState } from '../src/auth/auth'
 import DetailTable from './components/pages/detailTable'
 import { BubbleApplicationContext } from './store/bubbleProjectContext'
 import { BubbleTableSettingContext } from './store/bubbleTableSettingContext'
+import {
+  CurrentUserContext,
+  CurrentUserContextType,
+} from './store/currentUserContext'
 
 const Home = () => {
   // TODO: これは外部から設定できるようにする
@@ -17,13 +22,23 @@ const Home = () => {
 
   const bubbleTableSettingContext = { tableName: 'student' }
 
+  // Create a currentUser state
+  const [currentUser, setCurrentUser] = useState<CurrentUserContextType>(null)
+
+  // Listen to onAuthStateChanged
+  useEffect(() => {
+    listenAuthState(setCurrentUser)
+  }, [])
+
   return (
     <>
-      <BubbleApplicationContext.Provider value={bubbleApplicationContext}>
-        <BubbleTableSettingContext.Provider value={bubbleTableSettingContext}>
-          <DetailTable></DetailTable>
-        </BubbleTableSettingContext.Provider>
-      </BubbleApplicationContext.Provider>
+      <CurrentUserContext.Provider value={currentUser}>
+        <BubbleApplicationContext.Provider value={bubbleApplicationContext}>
+          <BubbleTableSettingContext.Provider value={bubbleTableSettingContext}>
+            <DetailTable></DetailTable>
+          </BubbleTableSettingContext.Provider>
+        </BubbleApplicationContext.Provider>
+      </CurrentUserContext.Provider>
     </>
   )
 }

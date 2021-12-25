@@ -1,5 +1,6 @@
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
+import { CurrentUserContextType } from '../../pages/store/currentUserContext'
 
 export const config = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -28,24 +29,18 @@ export const Login = async () => {
       const errorMessage = error.message
       console.log(errorMessage)
     })
-  console.log(result)
   return result
 }
 
 // ログイン状態の検知
-export const listenAuthState = (dispatch: any) => {
+export const listenAuthState = (
+  setCurrentUser: React.Dispatch<React.SetStateAction<CurrentUserContextType>>,
+) => {
   return firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      dispatch({
-        type: 'login',
-        payload: {
-          user,
-        },
-      })
+      setCurrentUser(user)
     } else {
-      dispatch({
-        type: 'logout',
-      })
+      setCurrentUser(null)
     }
   })
 }
