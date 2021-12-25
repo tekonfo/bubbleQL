@@ -5,6 +5,7 @@ import { BubbleTableSettingContext } from './store/bubbleTableSettingContext'
 
 const Home = () => {
   // TODO: これは外部から設定できるようにする
+  // TODO: これはlocalStorageから引っ張る形にする
   const bubbleApplicationContext = {
     apiToken: 'aaa',
     appName: 'try-plugin',
