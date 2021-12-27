@@ -1,15 +1,15 @@
-import { Button } from '@mui/material'
-import { useContext } from 'react'
-import { Login, Logout } from '../../../src/auth/auth'
-import { CurrentUserContext } from '../../store/currentUserContext'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import BubbleTableHeaderLoginButton from '../molecules/bubbleTableHeader/loginButton'
+import BubbleTableHeaderTitle from '../molecules/bubbleTableHeader/title'
 
 export default function Header() {
-  const currentUserContext = useContext(CurrentUserContext)
-  const button = currentUserContext ? (
-    <Button onClick={Logout}>ログアウト</Button>
-  ) : (
-    <Button onClick={Login}>Google認証</Button>
+  return (
+    <AppBar color="inherit" elevation={0}>
+      <Toolbar>
+        <BubbleTableHeaderTitle />
+        <BubbleTableHeaderLoginButton />
+      </Toolbar>
+    </AppBar>
   )
-
-  return <div>{button}</div>
 }
