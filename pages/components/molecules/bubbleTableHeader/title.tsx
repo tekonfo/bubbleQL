@@ -12,7 +12,7 @@ export default function BubbleTableHeaderTitle() {
     setOpen(false)
   }
 
-  const bubbleApplicationContext = useContext(BubbleApplicationContext)
+  const { bubbleApplicationContext } = useContext(BubbleApplicationContext)
   return (
     <>
       <div onClick={handleClickOpen}>

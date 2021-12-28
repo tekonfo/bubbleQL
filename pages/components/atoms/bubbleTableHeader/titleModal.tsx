@@ -9,17 +9,14 @@ import React, { useContext, useState } from 'react'
 import { BubbleApplicationContext } from '../../../store/bubbleProjectContext'
 
 export default function BubbleTableHeaderTitleModal() {
-  const bubbleApplicationContext = useContext(BubbleApplicationContext)
+  const { bubbleApplicationContext, setBubbleApplicationContext } = useContext(
+    BubbleApplicationContext,
+  )
   const [input, setInput] = useState(bubbleApplicationContext)
-  const handleInput = (
-    evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const newValue = evt.target.value
-    const id = evt.target.id
-    console.log(newValue, id)
-    //TODO: これが更新されない
-    setInput({ ...input, [id]: newValue })
+  const handleSubmit = () => {
+    setBubbleApplicationContext({ ...input })
   }
+
   return (
     <>
       <Card>
@@ -30,41 +27,37 @@ export default function BubbleTableHeaderTitleModal() {
             label="apiToken"
             variant="standard"
             defaultValue={input.apiToken}
-            onChange={evt => handleInput(evt)}
+            onChange={evt => setInput({ ...input, apiToken: evt.target.value })}
           />
           <TextField
             id="appName"
             label="appName"
             variant="standard"
             defaultValue={input.appName}
+            onChange={evt => setInput({ ...input, appName: evt.target.value })}
           />
           <TextField
             id="dataApiUrl"
             label="dataApiUrl"
             variant="standard"
             defaultValue={bubbleApplicationContext.dataApiUrl}
-          />
-          <TextField
-            id="isTestMode"
-            label="isTestMode"
-            variant="standard"
-            defaultValue={bubbleApplicationContext.isTestMode}
+            onChange={evt =>
+              setInput({ ...input, dataApiUrl: evt.target.value })
+            }
           />
           <TextField
             id="workFlowApiUrl"
             label="workFlowApiUrl"
             variant="standard"
             defaultValue={bubbleApplicationContext.workFlowApiUrl}
-          />
-          <TextField
-            id="enableDataTables"
-            label="enableDataTables"
-            variant="standard"
+            onChange={evt =>
+              setInput({ ...input, workFlowApiUrl: evt.target.value })
+            }
           />
         </CardContent>
 
         <CardActions>
-          <Button>設定を保存する</Button>
+          <Button onClick={handleSubmit}>設定を保存する</Button>
         </CardActions>
       </Card>
     </>

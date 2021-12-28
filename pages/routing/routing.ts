@@ -1,5 +1,8 @@
 import { BubbleBasicData } from '../model/bubbleBasicData'
-import { BubbleApplicationContextType } from '../store/bubbleProjectContext'
+import {
+  BubbleApplicationContextType,
+  BubbleApplicationType,
+} from '../store/bubbleProjectContext'
 import { BubbleTableSettingContextType } from '../store/bubbleTableSettingContext'
 import { getFetch } from '../util/fetch'
 abstract class Routing {
@@ -8,14 +11,14 @@ abstract class Routing {
 }
 
 export class BubbleRouting extends Routing {
-  applicationContext: BubbleApplicationContextType
+  applicationContext: BubbleApplicationType
   tableSettingContext: BubbleTableSettingContextType
   constructor(
     context: BubbleApplicationContextType,
     tableContext: BubbleTableSettingContextType,
   ) {
     super()
-    this.applicationContext = context
+    this.applicationContext = context.bubbleApplicationContext
     this.tableSettingContext = tableContext
   }
   route(): string {
