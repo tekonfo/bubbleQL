@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { listenAuthState } from '../../src/auth/auth'
+import { setBubbleApplication } from '../../src/repository/firestore'
 import DetailTable from '../components/pages/detailTable'
 import {
   BubbleApplicationContext,
@@ -24,9 +25,16 @@ const Home = () => {
       enableDataTables: [],
     })
 
+  const setBubbleApplicationContextWithFireStore = (
+    appId: string,
+    value: BubbleApplicationType,
+  ) => {
+    setBubbleApplicationContext(value)
+    setBubbleApplication(appId, value)
+  }
   const bubbleApplicationContextValue = {
     bubbleApplicationContext,
-    setBubbleApplicationContext,
+    setBubbleApplicationContext: setBubbleApplicationContextWithFireStore,
   }
 
   const bubbleTableSettingContext = { tableName: 'student' }

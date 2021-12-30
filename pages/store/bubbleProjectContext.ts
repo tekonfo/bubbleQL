@@ -9,9 +9,10 @@ export type BubbleApplicationType = {
 }
 export type BubbleApplicationContextType = {
   bubbleApplicationContext: BubbleApplicationType
-  setBubbleApplicationContext: React.Dispatch<
-    React.SetStateAction<BubbleApplicationType>
-  >
+  setBubbleApplicationContext: (
+    appId: string,
+    data: BubbleApplicationType,
+  ) => void
 }
 // これの登録がない場合は、リダイレクトするとかしたい
 export const BubbleApplicationContext = createContext(

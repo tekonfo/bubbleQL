@@ -22,7 +22,7 @@ const createCollection = <T = DocumentData>(collectionName: string) => {
 
 // export all your collections
 export const bubbleApplicationCol =
-  createCollection<BubbleApplicationType>('users')
+  createCollection<BubbleApplicationType>('Application')
 
 export const setBubbleApplication = async (
   id: string,

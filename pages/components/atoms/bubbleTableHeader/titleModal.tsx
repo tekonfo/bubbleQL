@@ -5,16 +5,23 @@ import {
   CardActions,
   Button,
 } from '@mui/material'
+import { useRouter } from 'next/dist/client/router'
 import React, { useContext, useState } from 'react'
 import { BubbleApplicationContext } from '../../../store/bubbleProjectContext'
 
 export default function BubbleTableHeaderTitleModal() {
+  const router = useRouter()
+  const { appId } = router.query
   const { bubbleApplicationContext, setBubbleApplicationContext } = useContext(
     BubbleApplicationContext,
   )
   const [input, setInput] = useState(bubbleApplicationContext)
   const handleSubmit = () => {
-    setBubbleApplicationContext({ ...input })
+    if (typeof appId != 'string') {
+      return
+    }
+    console.log(appId, input)
+    setBubbleApplicationContext(appId, { ...input })
   }
 
   return (
