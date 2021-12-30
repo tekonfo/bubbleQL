@@ -2,11 +2,11 @@
 // Atomic Designのpages層に相当しますが、ただtemplatesを呼び出すだけのwrapperとなっています。
 import { useEffect, useMemo, useState, useContext } from 'react'
 import { TableInstance, useTable } from 'react-table'
-import { BubbleRouting } from '../../routing/routing'
-import BubbleService from '../../services/bubbleService'
-import { BubbleApplicationContext } from '../../store/bubbleProjectContext'
-import { BubbleTableContext } from '../../store/bubbleTableContext'
-import { BubbleTableSettingContext } from '../../store/bubbleTableSettingContext'
+import { BubbleRouting } from '../../../src/routing/routing'
+import BubbleService from '../../../src/services/bubbleService'
+import { BubbleApplicationContext } from '../../../src/store/bubbleProjectContext'
+import { BubbleTableContext } from '../../../src/store/bubbleTableContext'
+import { BubbleTableSettingContext } from '../../../src/store/bubbleTableSettingContext'
 import DetailTableTemplate from '../templates/detailTableTemplate'
 
 export default function DetailTable() {

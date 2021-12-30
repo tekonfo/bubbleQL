@@ -1,6 +1,6 @@
 import got from 'got'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { BubbleBasicData } from '../model/bubbleBasicData'
+import { BubbleBasicData } from '../../src/model/bubbleBasicData'
 import Bubble from './model/bubble/Bubble'
 import BubbleResponse from './model/bubble/dataResponse'
 

@@ -6,8 +6,8 @@ import {
   doc,
   setDoc,
 } from 'firebase/firestore'
-import { BubbleApplicationType } from '../../pages/store/bubbleProjectContext'
 import { Firebase } from '../firebase'
+import { BubbleApplicationType } from '../store/bubbleProjectContext'
 
 // Export firestore incase we need to access it directly
 export const firestore = getFirestore()

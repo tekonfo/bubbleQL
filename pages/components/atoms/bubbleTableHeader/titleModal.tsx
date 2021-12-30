@@ -7,7 +7,7 @@ import {
 } from '@mui/material'
 import { useRouter } from 'next/dist/client/router'
 import React, { useContext, useState } from 'react'
-import { BubbleApplicationContext } from '../../../store/bubbleProjectContext'
+import { BubbleApplicationContext } from '../../../../src/store/bubbleProjectContext'
 
 export default function BubbleTableHeaderTitleModal() {
   const router = useRouter()

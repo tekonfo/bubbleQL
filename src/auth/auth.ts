@@ -1,6 +1,6 @@
 import 'firebase/compat/auth'
-import { CurrentUserType } from '../../pages/store/currentUserContext'
 import { Firebase } from '../firebase'
+import { CurrentUserType } from '../store/currentUserContext'
 
 export const auth = Firebase.auth()
 

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { listenAuthState } from '../../src/auth/auth'
 import { setBubbleApplication } from '../../src/repository/firestore'
-import DetailTable from '../components/pages/detailTable'
 import {
   BubbleApplicationContext,
   BubbleApplicationType,
-} from '../store/bubbleProjectContext'
-import { BubbleTableSettingContext } from '../store/bubbleTableSettingContext'
+} from '../../src/store/bubbleProjectContext'
+import { BubbleTableSettingContext } from '../../src/store/bubbleTableSettingContext'
 import {
   CurrentUserContext,
   CurrentUserType,
-} from '../store/currentUserContext'
+} from '../../src/store/currentUserContext'
+import DetailTable from '../components/pages/detailTable'
 
 const Home = () => {
   // TODO: これは外部から設定できるようにする
