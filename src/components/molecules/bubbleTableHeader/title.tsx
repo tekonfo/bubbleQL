@@ -1,6 +1,6 @@
 import { Dialog, Typography } from '@mui/material'
 import React, { useContext } from 'react'
-import { BubbleApplicationContext } from '../../../../src/store/bubbleProjectContext'
+import { BubbleApplicationContext } from '../../../store/bubbleProjectContext'
 import BubbleTableHeaderTitleModal from '../../atoms/bubbleTableHeader/titleModal'
 
 export default function BubbleTableHeaderTitle() {

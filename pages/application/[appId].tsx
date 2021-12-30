@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { listenAuthState } from '../../src/auth/auth'
+import DetailTable from '../../src/components/pages/detailTable'
 import { setBubbleApplication } from '../../src/repository/firestore'
 import {
   BubbleApplicationContext,
@@ -10,7 +11,6 @@ import {
   CurrentUserContext,
   CurrentUserType,
 } from '../../src/store/currentUserContext'
-import DetailTable from '../components/pages/detailTable'
 
 const Home = () => {
   // TODO: これは外部から設定できるようにする
