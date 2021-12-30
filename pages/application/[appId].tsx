@@ -23,6 +23,7 @@ const Home = () => {
       isTestMode: true,
       enableDataTables: [],
     })
+
   const bubbleApplicationContextValue = {
     bubbleApplicationContext,
     setBubbleApplicationContext,
@@ -33,7 +34,6 @@ const Home = () => {
   const [currentUser, setCurrentUser] = useState<CurrentUserType>(null)
   useEffect(() => {
     listenAuthState(setCurrentUser)
-    // applicationのデータをフェッチ
   }, [])
   const currentUserContextValue = {
     currentUser,
