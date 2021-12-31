@@ -1,3 +1,4 @@
+import Box, { BoxProps } from '@mui/material/Box'
 import HideFields from '../tableHeader/hideFields'
 
 export default function TableHeader({
@@ -6,17 +7,24 @@ export default function TableHeader({
   children?: React.ReactNode
 }) {
   return (
-    <div className="flex flex-row">
-      <div className="flex-auto">VIEWS</div>
-      <div className="flex-auto">Grid View</div>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        p: 1,
+        m: 1,
+      }}
+    >
+      <div>VIEWS</div>
+      <div>Grid View</div>
       <HideFields></HideFields>
-      <div className="flex-auto">Filter</div>
-      <div className="flex-auto">Group</div>
-      <div className="flex-auto">Sort</div>
-      <div className="flex-auto">Color</div>
-      <div className="flex-auto">Sort</div>
-      <div className="flex-auto">Row height</div>
-      <div className="flex-auto">Share view</div>
-    </div>
+      <div>Filter</div>
+      <div>Group</div>
+      <div>Sort</div>
+      <div>Color</div>
+      <div>Sort</div>
+      <div>Row height</div>
+      <div>Share view</div>
+    </Box>
   )
 }

@@ -5,7 +5,7 @@ import BubbleTableHeaderTitle from '../molecules/bubbleTableHeader/title'
 
 export default function Header() {
   return (
-    <AppBar color="inherit" elevation={0}>
+    <AppBar color="inherit" elevation={0} position="static">
       <Toolbar>
         <BubbleTableHeaderTitle />
         <BubbleTableHeaderLoginButton />

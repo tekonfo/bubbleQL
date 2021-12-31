@@ -29,7 +29,6 @@ const Home = () => {
       isTestMode: true,
       enableDataTables: [],
     })
-
   const setBubbleApplicationContextWithFireStore = (
     appId: string,
     value: BubbleApplicationType,
@@ -42,14 +41,20 @@ const Home = () => {
     setBubbleApplicationContext: setBubbleApplicationContextWithFireStore,
   }
 
-  const bubbleTableSettingContext = { tableName: 'student' }
-
   const [currentUser, setCurrentUser] = useState<CurrentUserType>(null)
+  const currentUserContextValue = {
+    currentUser,
+    setCurrentUser,
+  }
+
   useEffect(() => {
     if (!router.isReady) return
 
     const f = async () => {
+      // ログインしているかどうかを判定する
       listenAuthState(setCurrentUser)
+
+      // bubbleApplicationContextのデータをフェッチ
       if (typeof appId !== 'string') {
         return
       }
@@ -62,10 +67,6 @@ const Home = () => {
     }
     f()
   }, [router.isReady])
-  const currentUserContextValue = {
-    currentUser,
-    setCurrentUser,
-  }
 
   return (
     <>
@@ -73,7 +74,7 @@ const Home = () => {
         <BubbleApplicationContext.Provider
           value={bubbleApplicationContextValue}
         >
-          <BubbleTableSettingContext.Provider value={bubbleTableSettingContext}>
+          <BubbleTableSettingContext.Provider value={{ tableName: 'student' }}>
             <DetailTable></DetailTable>
           </BubbleTableSettingContext.Provider>
         </BubbleApplicationContext.Provider>
