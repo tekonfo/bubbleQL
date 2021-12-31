@@ -3,8 +3,10 @@ import {
   collection,
   DocumentData,
   CollectionReference,
+  DocumentSnapshot,
   doc,
   setDoc,
+  getDoc,
 } from 'firebase/firestore'
 import { Firebase } from '../firebase'
 import { BubbleApplicationType } from '../store/bubbleProjectContext'
@@ -30,4 +32,11 @@ export const setBubbleApplication = async (
 ) => {
   const ref = doc(bubbleApplicationCol, id)
   await setDoc(ref, data)
+}
+
+export const getBubbleApplication = async (
+  id: string,
+): Promise<DocumentSnapshot<BubbleApplicationType>> => {
+  const ref = doc(bubbleApplicationCol, id)
+  return await getDoc(ref)
 }

@@ -1,7 +1,11 @@
+import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
 import { listenAuthState } from '../../src/auth/auth'
 import DetailTable from '../../src/components/pages/detailTable'
-import { setBubbleApplication } from '../../src/repository/firestore'
+import {
+  getBubbleApplication,
+  setBubbleApplication,
+} from '../../src/repository/firestore'
 import {
   BubbleApplicationContext,
   BubbleApplicationType,
@@ -13,8 +17,9 @@ import {
 } from '../../src/store/currentUserContext'
 
 const Home = () => {
-  // TODO: これは外部から設定できるようにする
-  // TODO: これはlocalStorageから引っ張る形にする
+  const router = useRouter()
+  const { appId } = router.query
+
   const [bubbleApplicationContext, setBubbleApplicationContext] =
     useState<BubbleApplicationType>({
       apiToken: 'aaa',
@@ -41,8 +46,22 @@ const Home = () => {
 
   const [currentUser, setCurrentUser] = useState<CurrentUserType>(null)
   useEffect(() => {
-    listenAuthState(setCurrentUser)
-  }, [])
+    if (!router.isReady) return
+
+    const f = async () => {
+      listenAuthState(setCurrentUser)
+      if (typeof appId !== 'string') {
+        return
+      }
+      const bubbleApplication = await getBubbleApplication(appId)
+      const data = bubbleApplication.data()
+      if (data === undefined) {
+        return
+      }
+      setBubbleApplicationContext(data)
+    }
+    f()
+  }, [router.isReady])
   const currentUserContextValue = {
     currentUser,
     setCurrentUser,
