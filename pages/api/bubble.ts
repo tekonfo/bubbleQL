@@ -19,6 +19,12 @@ export default async function handler(
     res.status(400).json({ name: 'error', results: [] })
     return
   }
+
+  if (appName === '' || apiToken === '' || tableName === '') {
+    res.status(400).json({ name: 'パラメータが空文字です', results: [] })
+    return
+  }
+
   const bubble = new Bubble(appName, apiToken, Boolean(isTestMode))
   const studentUrl = bubble.getDataEndpoint(tableName)
   const r = await got.get<any>(studentUrl, {

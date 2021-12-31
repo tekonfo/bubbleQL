@@ -27,9 +27,14 @@ export default function DetailTable() {
   const bubbleApplicationContext = useContext(BubbleApplicationContext)
   const bubbleTableSettingContext = useContext(BubbleTableSettingContext)
 
-  // bubbleApplicationContextに影響が出たら、更新する
   useEffect(() => {
     const getData = async () => {
+      const { appName, apiToken } =
+        bubbleApplicationContext.bubbleApplicationContext
+      if (appName === '' || apiToken === '') {
+        return
+      }
+
       const routing = new BubbleRouting(
         bubbleApplicationContext,
         bubbleTableSettingContext,

@@ -22,10 +22,10 @@ const Home = () => {
 
   const [bubbleApplicationContext, setBubbleApplicationContext] =
     useState<BubbleApplicationType>({
-      apiToken: 'aaa',
-      appName: 'try-plugin',
-      workFlowApiUrl: 'ccc',
-      dataApiUrl: 'bbb',
+      apiToken: '',
+      appName: '',
+      workFlowApiUrl: '',
+      dataApiUrl: '',
       isTestMode: true,
       enableDataTables: [],
     })
