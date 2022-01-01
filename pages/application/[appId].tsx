@@ -5,7 +5,7 @@ import DetailTable from '../../src/components/pages/detailTable'
 import {
   getBubbleApplication,
   setBubbleApplication,
-} from '../../src/repository/firestore'
+} from '../../src/repository/model/bubbleApplication'
 import {
   BubbleApplicationContext,
   BubbleApplicationType,
