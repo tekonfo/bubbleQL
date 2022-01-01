@@ -37,7 +37,9 @@ export default function DetailTable() {
 
       const routing = new BubbleRouting(
         bubbleApplicationContext,
-        bubbleTableSettingContext,
+        bubbleTableSettingContext.bubbleTableSettingContextTypes[
+          bubbleTableSettingContext.index
+        ],
       )
       const data = await routing.fetcher(routing.route())
       const bubbleService = new BubbleService()

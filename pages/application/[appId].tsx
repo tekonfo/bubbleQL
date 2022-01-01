@@ -6,11 +6,16 @@ import {
   getBubbleApplication,
   setBubbleApplication,
 } from '../../src/repository/model/bubbleApplication'
+import { getBubbleTableSettings } from '../../src/repository/model/bubbleTableSetting'
 import {
   BubbleApplicationContext,
   BubbleApplicationType,
 } from '../../src/store/bubbleProjectContext'
-import { BubbleTableSettingContext } from '../../src/store/bubbleTableSettingContext'
+import {
+  BubbleTableSettingContext,
+  BubbleTableSettingContextType,
+  BubbleTableSettingType,
+} from '../../src/store/bubbleTableSettingContext'
 import {
   CurrentUserContext,
   CurrentUserType,
@@ -41,6 +46,14 @@ const Home = () => {
     setBubbleApplicationContext: setBubbleApplicationContextWithFireStore,
   }
 
+  const [bubbleTableSettingContextTypes, setBubbleTableSettingContextTypes] =
+    useState<Array<BubbleTableSettingContextType>>([{ tableName: '' }])
+  const bubbleTableSettingsContext: BubbleTableSettingType = {
+    index: 0,
+    bubbleTableSettingContextTypes,
+    setBubbleTableSettingContextTypes,
+  }
+
   const [currentUser, setCurrentUser] = useState<CurrentUserType>(null)
   const currentUserContextValue = {
     currentUser,
@@ -64,6 +77,10 @@ const Home = () => {
         return
       }
       setBubbleApplicationContext(data)
+
+      // table
+      const bubbleTableSettings = await getBubbleTableSettings(appId)
+      setBubbleTableSettingContextTypes(bubbleTableSettings)
     }
     f()
   }, [router.isReady])
@@ -74,7 +91,9 @@ const Home = () => {
         <BubbleApplicationContext.Provider
           value={bubbleApplicationContextValue}
         >
-          <BubbleTableSettingContext.Provider value={{ tableName: 'student' }}>
+          <BubbleTableSettingContext.Provider
+            value={bubbleTableSettingsContext}
+          >
             <DetailTable></DetailTable>
           </BubbleTableSettingContext.Provider>
         </BubbleApplicationContext.Provider>

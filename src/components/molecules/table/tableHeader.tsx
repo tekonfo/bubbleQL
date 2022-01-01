@@ -1,4 +1,5 @@
 import Box, { BoxProps } from '@mui/material/Box'
+import { useEffect } from 'react'
 import HideFields from '../tableHeader/hideFields'
 
 export default function TableHeader({
