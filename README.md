@@ -1,3 +1,6 @@
+開発ドキュメント
+https://mica-yarn-3e9.notion.site/bubbleQL-3777f64de4ba4bb58720b9503f9f794f
+
 ## What is it?
 
 This is a DB client tool that can handle [Bubble](https://bubble.io)'s DB in an [Airtable](https://airtable.com/) Like manner.
