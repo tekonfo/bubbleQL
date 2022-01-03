@@ -35,11 +35,12 @@ const Home = () => {
       enableDataTables: [],
     })
   const setBubbleApplicationContextWithFireStore = (
+    uid: string,
     appId: string,
     value: BubbleApplicationType,
   ) => {
     setBubbleApplicationContext(value)
-    setBubbleApplication(appId, value)
+    setBubbleApplication(uid, appId, value)
   }
   const bubbleApplicationContextValue = {
     bubbleApplicationContext,
@@ -67,11 +68,19 @@ const Home = () => {
       // ログインしているかどうかを判定する
       listenAuthState(setCurrentUser)
 
+      // console.log(currentUser)
+
+      if (!currentUser) {
+        return
+      }
+
+      const uid = currentUser.uid
+
       // bubbleApplicationContextのデータをフェッチ
       if (typeof appId !== 'string') {
         return
       }
-      const bubbleApplication = await getBubbleApplication(appId)
+      const bubbleApplication = await getBubbleApplication(uid, appId)
       const data = bubbleApplication.data()
       if (data === undefined) {
         return
@@ -79,11 +88,11 @@ const Home = () => {
       setBubbleApplicationContext(data)
 
       // table
-      const bubbleTableSettings = await getBubbleTableSettings(appId)
+      const bubbleTableSettings = await getBubbleTableSettings(uid, appId)
       setBubbleTableSettingContextTypes(bubbleTableSettings)
     }
     f()
-  }, [router.isReady])
+  }, [router.isReady, currentUser])
 
   return (
     <>

@@ -5,7 +5,7 @@ import { CurrentUserContext } from '../../../store/currentUserContext'
 
 export default function BubbleTableHeaderLoginButton() {
   const currentUserContext = useContext(CurrentUserContext)
-  return currentUserContext ? (
+  return currentUserContext.currentUser ? (
     <Button onClick={Logout}>ログアウト</Button>
   ) : (
     <Button onClick={Login}>Google認証</Button>

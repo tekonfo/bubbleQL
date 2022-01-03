@@ -10,6 +10,7 @@ export type BubbleApplicationType = {
 export type BubbleApplicationContextType = {
   bubbleApplicationContext: BubbleApplicationType
   setBubbleApplicationContext: (
+    uid: string,
     appId: string,
     data: BubbleApplicationType,
   ) => void
