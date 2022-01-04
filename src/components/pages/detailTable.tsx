@@ -44,7 +44,20 @@ export default function DetailTable() {
       const data = await routing.fetcher(routing.route())
       const bubbleService = new BubbleService()
       setBodyData(bubbleService.getBody(data?.results))
-      setColumnsData(bubbleService.getKeys(data?.results))
+      const keys = bubbleService.getKeys(data?.results)
+      const handleShow = (cell: any) => {
+        console.log(cell?.row?.original)
+      }
+      const de = {
+        Header: 'Delete',
+        id: 'delete',
+        accessor: (str: any) => 'delete',
+        Cell: (props: any) => (
+          <button onClick={() => handleShow(props)}>Details</button>
+        ),
+      }
+      keys.push(de)
+      setColumnsData(keys)
     }
     getData()
   }, [bubbleApplicationContext, bubbleTableSettingContext])

@@ -11,10 +11,8 @@ export default function Table({ children }: { children?: React.ReactNode }) {
 
   return (
     <table {...getTableProps()}>
-      <TableThead>
-        <TableTr></TableTr>
-      </TableThead>
-      <TableTbody></TableTbody>
+      <TableThead />
+      <TableTbody />
     </table>
   )
 }
