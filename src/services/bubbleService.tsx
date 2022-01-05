@@ -22,8 +22,10 @@ export default class BubbleService {
       Header: 'Duplicate',
       id: 'duplicate',
       accessor: (str: any) => 'duplicate',
-      Cell: (props: any) => (
-        <button onClick={() => this.duplicateRow(props)}>Duplicate</button>
+      // TODO: tableインスタンスが入っている
+      // https://react-table.tanstack.com/docs/api/useTable#instance-properties
+      Cell: ({ cell }: { cell: any }) => (
+        <button onClick={() => this.duplicateRow(cell)}>Duplicate</button>
       ),
     }
   }
