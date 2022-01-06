@@ -1,3 +1,4 @@
+import { route } from 'next/dist/server/router'
 import { Column } from 'react-table'
 export default class BubbleService {
   getKeys(lists: Array<object>): Column<any>[] {
@@ -40,9 +41,13 @@ export default class BubbleService {
     }
   }
 
-  private duplicateRow(props: any) {
-    console.log(props)
+  private duplicateRow(cell: any) {
+    const id = cell.row.values._id
+    // routerを持ってくる
+
+    console.log(cell)
   }
+
   private deleteRow(props: any) {
     console.log(props)
   }

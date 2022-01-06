@@ -21,6 +21,7 @@ export class BubbleRouting extends Routing {
     this.applicationContext = context.bubbleApplicationContext
     this.tableSettingContext = tableContext
   }
+
   route(): string {
     const params = {
       appName: this.applicationContext.appName,
@@ -31,6 +32,15 @@ export class BubbleRouting extends Routing {
     const query_params = new URLSearchParams(params)
     return 'http://localhost:3000/api/bubble?' + query_params
   }
+
+  postRoute(): string {
+    return `https://${this.applicationContext.appName}.bubbleapps.io/api/1.1/obj/${this.tableSettingContext.tableName}`
+  }
+
+  detailRoute(id: string): string {
+    return `https://${this.applicationContext.appName}.bubbleapps.io/api/1.1/obj/${this.tableSettingContext.tableName}/${id}`
+  }
+
   async fetcher(url: string): Promise<BubbleBasicData | null> {
     const fetch = getFetch()
     const response = await fetch(url)
@@ -38,6 +48,23 @@ export class BubbleRouting extends Routing {
     if (json === null) return null
     return json
   }
+
+  // clientサイドでなければ動かない
+  async createNewThing(data: any): Promise<any> {
+    const res = await window.fetch(this.postRoute(), {
+      method: 'POST',
+      body: data,
+    })
+    return res
+  }
+
+  async getDataById(id: string): Promise<any> {
+    const res = await window.fetch(this.detailRoute(id))
+    return res
+  }
+
+  async deleteDataById(id: string): Promise<any> {}
+
   getKeys() {}
 
   isBubbleBasicData = (item: any): item is BubbleBasicData => {
