@@ -57,13 +57,14 @@ export class BubbleRouting extends Routing {
     delete data['Modified Date']
 
     console.log(data)
-
+    const cred = ''
     const res = await window.fetch(this.postRoute(), {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ceed36498fa93dbd6e58f5fc7c206f70',
+
+        Authorization: `Bearer ${cred}`,
       },
     })
     const result = await res.json()
