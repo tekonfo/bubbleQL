@@ -1,7 +1,7 @@
-import { route } from 'next/dist/server/router'
 import { Column } from 'react-table'
+import { BubbleRouting } from '../routing/routing'
 export default class BubbleService {
-  getKeys(lists: Array<object>): Column<any>[] {
+  getKeys(lists: Array<object>, routing: BubbleRouting): Column<any>[] {
     if (!lists) return []
     if (lists.length == 0) return []
     // TODO: keyを全部の行のsetにする
@@ -10,15 +10,16 @@ export default class BubbleService {
       Header: val,
       accessor: val,
     }))
-    keysObj.push(this.duplicateCol())
+    keysObj.push(this.duplicateCol(routing))
     keysObj.push(this.deleteCol())
     return keysObj
   }
+
   getBody(lists: Array<object>): Array<object> {
     return lists
   }
 
-  private duplicateCol(): any {
+  private duplicateCol(routing: BubbleRouting): any {
     return {
       Header: 'Duplicate',
       id: 'duplicate',
@@ -26,7 +27,9 @@ export default class BubbleService {
       // TODO: tableインスタンスが入っている
       // https://react-table.tanstack.com/docs/api/useTable#instance-properties
       Cell: ({ cell }: { cell: any }) => (
-        <button onClick={() => this.duplicateRow(cell)}>Duplicate</button>
+        <button onClick={() => this.duplicateRow(routing, cell)}>
+          Duplicate
+        </button>
       ),
     }
   }
@@ -41,11 +44,11 @@ export default class BubbleService {
     }
   }
 
-  private duplicateRow(cell: any) {
+  private async duplicateRow(routing: BubbleRouting, cell: any) {
     const id = cell.row.values._id
-    // routerを持ってくる
-
-    console.log(cell)
+    const data = await routing.getDataById(id)
+    const res = await routing.createNewThing(data)
+    console.log(res)
   }
 
   private deleteRow(props: any) {

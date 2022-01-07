@@ -33,12 +33,12 @@ export class BubbleRouting extends Routing {
     return 'http://localhost:3000/api/bubble?' + query_params
   }
 
-  postRoute(): string {
-    return `https://${this.applicationContext.appName}.bubbleapps.io/api/1.1/obj/${this.tableSettingContext.tableName}`
+  private postRoute(): string {
+    return `https://${this.applicationContext.appName}.bubbleapps.io/version-test/api/1.1/obj/${this.tableSettingContext.tableName}`
   }
 
-  detailRoute(id: string): string {
-    return `https://${this.applicationContext.appName}.bubbleapps.io/api/1.1/obj/${this.tableSettingContext.tableName}/${id}`
+  private detailRoute(id: string): string {
+    return `https://${this.applicationContext.appName}.bubbleapps.io/version-test/api/1.1/obj/${this.tableSettingContext.tableName}/${id}`
   }
 
   async fetcher(url: string): Promise<BubbleBasicData | null> {
@@ -51,16 +51,29 @@ export class BubbleRouting extends Routing {
 
   // clientサイドでなければ動かない
   async createNewThing(data: any): Promise<any> {
+    delete data['_id']
+    delete data['Created Date']
+    delete data['Created By']
+    delete data['Modified Date']
+
+    console.log(data)
+
     const res = await window.fetch(this.postRoute(), {
       method: 'POST',
-      body: data,
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ceed36498fa93dbd6e58f5fc7c206f70',
+      },
     })
-    return res
+    const result = await res.json()
+    return result.response
   }
 
   async getDataById(id: string): Promise<any> {
     const res = await window.fetch(this.detailRoute(id))
-    return res
+    const result = await res.json()
+    return result.response
   }
 
   async deleteDataById(id: string): Promise<any> {}
