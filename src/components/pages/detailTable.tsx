@@ -7,6 +7,7 @@ import BubbleService from '../../services/bubbleService'
 import { BubbleApplicationContext } from '../../store/bubbleProjectContext'
 import { BubbleTableContext } from '../../store/bubbleTableContext'
 import { BubbleTableSettingContext } from '../../store/bubbleTableSettingContext'
+import { IsRefreshBubbleTableContext } from '../../store/refreshBubbleTableContext'
 import DetailTableTemplate from '../templates/detailTableTemplate'
 
 export default function DetailTable() {
@@ -27,8 +28,10 @@ export default function DetailTable() {
   const bubbleApplicationContext = useContext(BubbleApplicationContext)
   const bubbleTableSettingContext = useContext(BubbleTableSettingContext)
 
+  //TODO:  無限ループになってしまう
   useEffect(() => {
     const getData = async () => {
+      console.log('test')
       const { appName, apiToken } =
         bubbleApplicationContext.bubbleApplicationContext
       if (appName === '' || apiToken === '') {

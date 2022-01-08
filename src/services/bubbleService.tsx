@@ -1,5 +1,10 @@
+import { useContext } from 'react'
 import { Column } from 'react-table'
 import { BubbleRouting } from '../routing/routing'
+import {
+  IsRefreshBubbleTableContext,
+  RefreshBubbleTableContext,
+} from '../store/refreshBubbleTableContext'
 export default class BubbleService {
   getKeys(lists: Array<object>, routing: BubbleRouting): Column<any>[] {
     if (!lists) return []
@@ -49,6 +54,7 @@ export default class BubbleService {
     const data = await routing.getDataById(id)
     const res = await routing.createNewThing(data)
     console.log(res)
+    // RefreshBubbleTableContext()
   }
 
   private deleteRow(props: any) {

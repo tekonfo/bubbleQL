@@ -20,10 +20,17 @@ import {
   CurrentUserContext,
   CurrentUserType,
 } from '../../src/store/currentUserContext'
+import {
+  BuildIsRefreshBubbleTableContext,
+  IsRefreshBubbleTableContext,
+} from '../../src/store/refreshBubbleTableContext'
 
 const Home = () => {
   const router = useRouter()
   const { appId } = router.query
+
+  const isRefreshBubbleTableTypeContextValue =
+    BuildIsRefreshBubbleTableContext()
 
   const [bubbleApplicationContext, setBubbleApplicationContext] =
     useState<BubbleApplicationType>({
@@ -68,8 +75,6 @@ const Home = () => {
       // ログインしているかどうかを判定する
       listenAuthState(setCurrentUser)
 
-      // console.log(currentUser)
-
       if (!currentUser) {
         return
       }
@@ -88,8 +93,9 @@ const Home = () => {
       setBubbleApplicationContext(data)
 
       // table
-      const bubbleTableSettings = await getBubbleTableSettings(uid, appId)
-      setBubbleTableSettingContextTypes(bubbleTableSettings)
+      setBubbleTableSettingContextTypes(
+        await getBubbleTableSettings(uid, appId),
+      )
     }
     f()
   }, [router.isReady, currentUser])
@@ -103,7 +109,11 @@ const Home = () => {
           <BubbleTableSettingContext.Provider
             value={bubbleTableSettingsContext}
           >
-            <DetailTable></DetailTable>
+            <IsRefreshBubbleTableContext.Provider
+              value={isRefreshBubbleTableTypeContextValue}
+            >
+              <DetailTable></DetailTable>
+            </IsRefreshBubbleTableContext.Provider>
           </BubbleTableSettingContext.Provider>
         </BubbleApplicationContext.Provider>
       </CurrentUserContext.Provider>
