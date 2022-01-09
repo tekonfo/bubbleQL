@@ -24,10 +24,3 @@ export const BuildIsRefreshBubbleTableContext =
       setIsRefreshBubbleTableContextType,
     }
   }
-
-export const RefreshBubbleTableContext = () => {
-  const isRefreshBubbleTableContext = useContext(IsRefreshBubbleTableContext)
-  isRefreshBubbleTableContext.setIsRefreshBubbleTableContextType({
-    isRefreshTable: true,
-  })
-}

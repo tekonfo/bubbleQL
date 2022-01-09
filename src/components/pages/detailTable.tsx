@@ -27,11 +27,11 @@ export default function DetailTable() {
 
   const bubbleApplicationContext = useContext(BubbleApplicationContext)
   const bubbleTableSettingContext = useContext(BubbleTableSettingContext)
+  const isRefreshBubbleTableContext = useContext(IsRefreshBubbleTableContext)
 
   //TODO:  無限ループになってしまう
   useEffect(() => {
     const getData = async () => {
-      console.log('test')
       const { appName, apiToken } =
         bubbleApplicationContext.bubbleApplicationContext
       if (appName === '' || apiToken === '') {
@@ -39,7 +39,7 @@ export default function DetailTable() {
       }
 
       const routing = new BubbleRouting(
-        bubbleApplicationContext,
+        bubbleApplicationContext.bubbleApplicationContext,
         bubbleTableSettingContext.bubbleTableSettingContextTypes[
           bubbleTableSettingContext.index
         ],
@@ -47,11 +47,28 @@ export default function DetailTable() {
       const data = await routing.fetcher(routing.route())
       const bubbleService = new BubbleService()
       setBodyData(bubbleService.getBody(data?.results))
-      const keys = bubbleService.getKeys(data?.results, routing)
+      const keys = bubbleService.getKeys(data?.results, routing, () => {
+        isRefreshBubbleTableContext.setIsRefreshBubbleTableContextType({
+          isRefreshTable: true,
+        })
+      })
       setColumnsData(keys)
     }
     getData()
-  }, [bubbleApplicationContext, bubbleTableSettingContext])
+
+    if (
+      isRefreshBubbleTableContext.isRefreshBubbleTableContextType.isRefreshTable
+    ) {
+      isRefreshBubbleTableContext.setIsRefreshBubbleTableContextType({
+        isRefreshTable: false,
+      })
+    }
+  }, [
+    bubbleApplicationContext.bubbleApplicationContext,
+    bubbleTableSettingContext.bubbleTableSettingContextTypes,
+    bubbleTableSettingContext.index,
+    isRefreshBubbleTableContext,
+  ])
 
   return (
     <>

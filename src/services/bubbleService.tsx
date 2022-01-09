@@ -1,12 +1,11 @@
-import { useContext } from 'react'
 import { Column } from 'react-table'
 import { BubbleRouting } from '../routing/routing'
-import {
-  IsRefreshBubbleTableContext,
-  RefreshBubbleTableContext,
-} from '../store/refreshBubbleTableContext'
 export default class BubbleService {
-  getKeys(lists: Array<object>, routing: BubbleRouting): Column<any>[] {
+  getKeys(
+    lists: Array<object>,
+    routing: BubbleRouting,
+    refreshFunc: Function,
+  ): Column<any>[] {
     if (!lists) return []
     if (lists.length == 0) return []
     // TODO: keyを全部の行のsetにする
@@ -15,8 +14,8 @@ export default class BubbleService {
       Header: val,
       accessor: val,
     }))
-    keysObj.push(this.duplicateCol(routing))
-    keysObj.push(this.deleteCol())
+    keysObj.push(this.duplicateCol(routing, refreshFunc))
+    keysObj.push(this.deleteCol(refreshFunc))
     return keysObj
   }
 
@@ -24,7 +23,7 @@ export default class BubbleService {
     return lists
   }
 
-  private duplicateCol(routing: BubbleRouting): any {
+  private duplicateCol(routing: BubbleRouting, refreshFunc: Function): any {
     return {
       Header: 'Duplicate',
       id: 'duplicate',
@@ -32,32 +31,38 @@ export default class BubbleService {
       // TODO: tableインスタンスが入っている
       // https://react-table.tanstack.com/docs/api/useTable#instance-properties
       Cell: ({ cell }: { cell: any }) => (
-        <button onClick={() => this.duplicateRow(routing, cell)}>
+        <button onClick={() => this.duplicateRow(routing, cell, refreshFunc)}>
           Duplicate
         </button>
       ),
     }
   }
-  private deleteCol(): any {
+
+  private deleteCol(refreshFunc: Function): any {
     return {
       Header: 'Delete',
       id: 'delete',
       accessor: (str: any) => 'delete',
       Cell: (props: any) => (
-        <button onClick={() => this.deleteRow(props)}>Delete</button>
+        <button onClick={() => this.deleteRow(props, refreshFunc)}>
+          Delete
+        </button>
       ),
     }
   }
 
-  private async duplicateRow(routing: BubbleRouting, cell: any) {
+  private async duplicateRow(
+    routing: BubbleRouting,
+    cell: any,
+    refreshFunc: Function,
+  ) {
     const id = cell.row.values._id
     const data = await routing.getDataById(id)
-    const res = await routing.createNewThing(data)
-    console.log(res)
-    // RefreshBubbleTableContext()
+    await routing.createNewThing(data)
+    refreshFunc()
   }
 
-  private deleteRow(props: any) {
+  private deleteRow(props: any, refreshFunc: Function) {
     console.log(props)
   }
 }

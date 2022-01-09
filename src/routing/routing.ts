@@ -14,11 +14,11 @@ export class BubbleRouting extends Routing {
   applicationContext: BubbleApplicationType
   tableSettingContext: BubbleTableSettingContextType
   constructor(
-    context: BubbleApplicationContextType,
+    bubbleApplicationTypeContext: BubbleApplicationType,
     tableContext: BubbleTableSettingContextType,
   ) {
     super()
-    this.applicationContext = context.bubbleApplicationContext
+    this.applicationContext = bubbleApplicationTypeContext
     this.tableSettingContext = tableContext
   }
 
@@ -56,8 +56,7 @@ export class BubbleRouting extends Routing {
     delete data['Created By']
     delete data['Modified Date']
 
-    console.log(data)
-    const cred = ''
+    const cred = process.env.NEXT_PUBLIC_BUBBLE_API_KEY
     const res = await window.fetch(this.postRoute(), {
       method: 'POST',
       body: JSON.stringify(data),
