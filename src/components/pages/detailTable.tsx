@@ -8,6 +8,7 @@ import { BubbleApplicationContext } from '../../store/bubbleProjectContext'
 import { BubbleTableContext } from '../../store/bubbleTableContext'
 import { BubbleTableSettingContext } from '../../store/bubbleTableSettingContext'
 import { IsRefreshBubbleTableContext } from '../../store/refreshBubbleTableContext'
+import { defaultColumn } from '../molecules/table/defaultCell'
 import DetailTableTemplate from '../templates/detailTableTemplate'
 
 export default function DetailTable() {
@@ -17,10 +18,17 @@ export default function DetailTable() {
   const columns = useMemo(() => columnsData, [columnsData])
   const resData = useMemo(() => bodyData, [bodyData])
 
-  const tableIns: TableInstance<object> = useTable({
+  const updateMyData = (rowIndex: any, columnId: any, value: any) => {
+    console.log(rowIndex, columnId, value)
+  }
+
+  const obj = {
     columns,
     data: resData,
-  })
+    defaultColumn,
+    updateMyData,
+  }
+  const tableIns: TableInstance<object> = useTable(obj)
 
   const [table, setTable] = useState(tableIns)
   const value = { table, setTable }
@@ -29,7 +37,6 @@ export default function DetailTable() {
   const bubbleTableSettingContext = useContext(BubbleTableSettingContext)
   const isRefreshBubbleTableContext = useContext(IsRefreshBubbleTableContext)
 
-  //TODO:  無限ループになってしまう
   useEffect(() => {
     const getData = async () => {
       const { appName, apiToken } =

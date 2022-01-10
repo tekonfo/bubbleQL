@@ -69,7 +69,17 @@ export default class BubbleService {
   ) {
     const id = cell.row.values._id
     const res = await routing.deleteDataById(id)
-    console.log(res)
+    refreshFunc()
+  }
+
+  private async updateRow(
+    routing: BubbleRouting,
+    cell: any,
+    refreshFunc: Function,
+  ) {
+    const id = cell.row.values._id
+    const data = cell.row.values
+    const res = await routing.updateDataById(id, data)
     refreshFunc()
   }
 }

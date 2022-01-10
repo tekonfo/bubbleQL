@@ -41,6 +41,14 @@ export class BubbleRouting extends Routing {
     return `https://${this.applicationContext.appName}.bubbleapps.io/version-test/api/1.1/obj/${this.tableSettingContext.tableName}/${id}`
   }
 
+  private updateRoute(id: string): string {
+    return `https://${this.applicationContext.appName}.bubbleapps.io/version-test/api/1.1/obj/${this.tableSettingContext.tableName}/${id}`
+  }
+
+  private deleteRoute(id: string): string {
+    return `https://${this.applicationContext.appName}.bubbleapps.io/version-test/api/1.1/obj/${this.tableSettingContext.tableName}/${id}`
+  }
+
   async fetcher(url: string): Promise<BubbleBasicData | null> {
     const fetch = getFetch()
     const response = await fetch(url)
@@ -76,7 +84,28 @@ export class BubbleRouting extends Routing {
     return result.response
   }
 
-  async deleteDataById(id: string): Promise<any> {}
+  async deleteDataById(id: string): Promise<any> {
+    const cred = process.env.NEXT_PUBLIC_BUBBLE_API_KEY
+    const res = await window.fetch(this.deleteRoute(id), {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${cred}`,
+      },
+    })
+    return res
+  }
+
+  async updateDataById(id: string, data: any): Promise<any> {
+    const cred = process.env.NEXT_PUBLIC_BUBBLE_API_KEY
+    const res = await window.fetch(this.updateRoute(id), {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${cred}`,
+      },
+      body: JSON.stringify(data),
+    })
+    return res
+  }
 
   getKeys() {}
 
