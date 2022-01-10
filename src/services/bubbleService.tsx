@@ -15,7 +15,7 @@ export default class BubbleService {
       accessor: val,
     }))
     keysObj.push(this.duplicateCol(routing, refreshFunc))
-    keysObj.push(this.deleteCol(refreshFunc))
+    keysObj.push(this.deleteCol(routing, refreshFunc))
     return keysObj
   }
 
@@ -38,13 +38,13 @@ export default class BubbleService {
     }
   }
 
-  private deleteCol(refreshFunc: Function): any {
+  private deleteCol(routing: BubbleRouting, refreshFunc: Function): any {
     return {
       Header: 'Delete',
       id: 'delete',
       accessor: (str: any) => 'delete',
       Cell: (props: any) => (
-        <button onClick={() => this.deleteRow(props, refreshFunc)}>
+        <button onClick={() => this.deleteRow(routing, props, refreshFunc)}>
           Delete
         </button>
       ),
@@ -62,7 +62,14 @@ export default class BubbleService {
     refreshFunc()
   }
 
-  private deleteRow(props: any, refreshFunc: Function) {
-    console.log(props)
+  private async deleteRow(
+    routing: BubbleRouting,
+    cell: any,
+    refreshFunc: Function,
+  ) {
+    const id = cell.row.values._id
+    const res = await routing.deleteDataById(id)
+    console.log(res)
+    refreshFunc()
   }
 }
