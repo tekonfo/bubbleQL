@@ -75,12 +75,10 @@ export default class BubbleService {
 
 export const updateRow = async (
   routing: BubbleRouting,
+  id: string,
   cell: any,
   refreshFunc: Function,
 ) => {
-  const id = cell.row.values._id
-  // TODO: これだとカラムは更新されていない
-  const data = cell.row.values
-  const res = await routing.updateDataById(id, data)
+  const res = await routing.updateDataById(id, cell)
   refreshFunc()
 }

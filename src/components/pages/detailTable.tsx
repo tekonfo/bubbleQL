@@ -18,24 +18,26 @@ export default function DetailTable() {
   const columns = useMemo(() => columnsData, [columnsData])
   const resData = useMemo(() => bodyData, [bodyData])
 
-  const updateMyData = (rowIndex: any, columnId: any, value: any) => {
-    console.log(rowIndex, columnId, value)
-  }
+  const bubbleApplicationContext = useContext(BubbleApplicationContext)
+  const bubbleTableSettingContext = useContext(BubbleTableSettingContext)
+  const isRefreshBubbleTableContext = useContext(IsRefreshBubbleTableContext)
+
+  const routing = new BubbleRouting(
+    bubbleApplicationContext.bubbleApplicationContext,
+    bubbleTableSettingContext.bubbleTableSettingContextTypes[
+      bubbleTableSettingContext.index
+    ],
+  )
 
   const obj = {
     columns,
     data: resData,
     defaultColumn,
-    updateMyData,
   }
   const tableIns: TableInstance<object> = useTable(obj)
 
   const [table, setTable] = useState(tableIns)
   const value = { table, setTable }
-
-  const bubbleApplicationContext = useContext(BubbleApplicationContext)
-  const bubbleTableSettingContext = useContext(BubbleTableSettingContext)
-  const isRefreshBubbleTableContext = useContext(IsRefreshBubbleTableContext)
 
   useEffect(() => {
     const getData = async () => {

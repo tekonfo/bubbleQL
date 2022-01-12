@@ -96,10 +96,12 @@ export class BubbleRouting extends Routing {
   }
 
   async updateDataById(id: string, data: any): Promise<any> {
+    console.log('test', data)
     const cred = process.env.NEXT_PUBLIC_BUBBLE_API_KEY
     const res = await window.fetch(this.updateRoute(id), {
       method: 'PUT',
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${cred}`,
       },
       body: JSON.stringify(data),
