@@ -1,5 +1,7 @@
+import _ from 'lodash'
 import { Column } from 'react-table'
 import { BubbleRouting } from '../routing/routing'
+
 export default class BubbleService {
   getKeys(
     lists: Array<object>,
@@ -8,8 +10,8 @@ export default class BubbleService {
   ): Column<any>[] {
     if (!lists) return []
     if (lists.length == 0) return []
-    // TODO: keyを全部の行のsetにする
-    const keys: Array<string> = Object.keys(lists[0])
+
+    const keys: Array<string> = this.getKeyArray(lists)
     const keysObj = keys.map(val => ({
       Header: val,
       accessor: val,
@@ -17,6 +19,10 @@ export default class BubbleService {
     keysObj.push(this.duplicateCol(routing, refreshFunc))
     keysObj.push(this.deleteCol(routing, refreshFunc))
     return keysObj
+  }
+
+  getKeyArray(lists: Array<any>): Array<string> {
+    return _.union(...lists.map(x => Object.keys(x)))
   }
 
   getBody(lists: Array<object>): Array<object> {
