@@ -3,6 +3,8 @@ import { Column } from 'react-table'
 import { BubbleRouting } from '../routing/routing'
 
 export default class BubbleService {
+  unableColumns = ['Created Date', 'Modified Date', '_id', 'Created By']
+
   getKeys(
     lists: Array<object>,
     routing: BubbleRouting,
@@ -12,13 +14,32 @@ export default class BubbleService {
     if (lists.length == 0) return []
 
     const keys: Array<string> = this.getKeyArray(lists)
-    const keysObj = keys.map(val => ({
-      Header: val,
-      accessor: val,
-    }))
+    const keysObj = this.setKeys(keys)
+
     keysObj.push(this.duplicateCol(routing, refreshFunc))
     keysObj.push(this.deleteCol(routing, refreshFunc))
     return keysObj
+  }
+
+  setKeys(keys: Array<any>): Array<any> {
+    const arr: any[] = []
+    for (const val of keys) {
+      if (this.unableColumns.indexOf(val) != -1) {
+        arr.push({
+          Header: val,
+          accessor: val,
+          Cell: ({ cell, value }: { cell: any; value: any }) => (
+            <div>{String(value)}</div>
+          ),
+        })
+      } else {
+        arr.push({
+          Header: val,
+          accessor: val,
+        })
+      }
+    }
+    return arr
   }
 
   getKeyArray(lists: Array<any>): Array<string> {
