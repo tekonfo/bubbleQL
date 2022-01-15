@@ -4,5 +4,6 @@
 
   // Prettier をデフォルトフォーマッターにする
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "jest.jestCommandLine": "jest"
+  "jest.jestCommandLine": "jest",
+  "jest.autoRun": "true"
 }
