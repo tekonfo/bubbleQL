@@ -54,6 +54,7 @@ export default function DetailTable() {
         ],
       )
       const data = await routing.fetcher(routing.route())
+      console.log(data)
       const bubbleService = new BubbleService()
       setBodyData(bubbleService.getBody(data?.results))
       const keys = bubbleService.getKeys(data?.results, routing, () => {

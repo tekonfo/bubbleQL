@@ -4,6 +4,7 @@ import { updateRow } from '../../../services/bubbleService'
 import { BubbleApplicationContext } from '../../../store/bubbleProjectContext'
 import { BubbleTableSettingContext } from '../../../store/bubbleTableSettingContext'
 import { IsRefreshBubbleTableContext } from '../../../store/refreshBubbleTableContext'
+import { checkValue, renderCell } from '../cells/checkValue'
 
 export const EditableCell = (props: any) => {
   const initialValue = props.value
@@ -45,7 +46,9 @@ export const EditableCell = (props: any) => {
     setValue(initialValue)
   }, [initialValue])
 
-  return <input value={value} onChange={onChange} onBlur={onBlur} />
+  const valueType = checkValue(value)
+
+  return renderCell(valueType, value, onChange, onBlur)
 }
 
 // Set our editable cell renderer as the default Cell renderer

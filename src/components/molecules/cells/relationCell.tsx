@@ -1,5 +1,6 @@
-export const RelationCell = (props: any) => {
-  // 1629814520923x535075473878253700
-  const val = props.value
-  return <input value={val} />
+export const RelationCell = (value: any, onChange: any, onBlur: any) => {
+  if (Array.isArray(value)) {
+    return <div>LINKs</div>
+  }
+  return <div>LINK</div>
 }
