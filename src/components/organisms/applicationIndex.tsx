@@ -1,7 +1,20 @@
-import Table from '../molecules/table/table'
-import TableHeader from '../molecules/table/tableHeader'
-import TableSidebar from '../molecules/table/tableSidebar'
+import { useCollection } from '@nandorojo/swr-firestore'
+import { useEffect, useState } from 'react'
+import { listenAuthState } from '../../auth/auth'
+import { getBubbleApplications } from '../../repository/model/bubbleApplication'
+import { BubbleApplicationType } from '../../store/bubbleProjectContext'
+import { CurrentUserType } from '../../store/currentUserContext'
 
 export default function ApplicationIndex() {
-  return <div></div>
+  const [currentUser, setCurrentUser] = useState<CurrentUserType>(null)
+  listenAuthState(setCurrentUser)
+
+  const { data, error } = useCollection<BubbleApplicationType>(
+    `User/O3w71bkSiqbmbsHJGdVqvr6m3Sf2/Application`,
+  )
+
+  if (error) return <div>Error!</div>
+  if (!data) return <div>Loading...</div>
+
+  return <>div</>
 }
