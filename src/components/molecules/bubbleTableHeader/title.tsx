@@ -13,11 +13,12 @@ export default function BubbleTableHeaderTitle() {
   }
 
   const { bubbleApplicationContext } = useContext(BubbleApplicationContext)
+
   return (
     <>
       <div onClick={handleClickOpen}>
         <Typography variant="h6" color="inherit" component="div">
-          {bubbleApplicationContext.appName}
+          {bubbleApplicationContext ? bubbleApplicationContext.appName : ''}
         </Typography>
       </div>
       <SimpleDialog open={open} onClose={handleClose} />
