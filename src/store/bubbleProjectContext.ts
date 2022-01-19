@@ -1,6 +1,8 @@
 import { createContext, useState } from 'react'
 import { setBubbleApplication } from '../repository/model/bubbleApplication'
 export type BubbleApplicationType = {
+  // FireStoreのidと一致
+  id: string
   apiToken: string
   appName: string
   workFlowApiUrl: string
@@ -25,6 +27,7 @@ export const BuildBubbleApplicationContext =
   (): BubbleApplicationContextType => {
     const [bubbleApplicationContext, setBubbleApplicationContext] =
       useState<BubbleApplicationType>({
+        id: '',
         apiToken: '',
         appName: '',
         workFlowApiUrl: '',

@@ -4,6 +4,7 @@ import {
   setDoc,
   getDoc,
   getDocs,
+  QuerySnapshot,
 } from 'firebase/firestore'
 import { BubbleApplicationType } from '../../store/bubbleProjectContext'
 import { createCollection } from '../firestore'
@@ -31,9 +32,7 @@ export const getBubbleApplication = async (
 
 export const getBubbleApplications = async (
   uid: string,
-): Promise<Array<BubbleApplicationType>> => {
+): Promise<QuerySnapshot<BubbleApplicationType>> => {
   const applications = await getDocs(bubbleApplicationCol(uid))
-  const data: BubbleApplicationType[] = []
-  applications.forEach(x => data.push(x.data()))
-  return data
+  return applications
 }

@@ -1,4 +1,11 @@
-import { DataGrid } from '@mui/x-data-grid'
+import {
+  Box,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from '@mui/material'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { listenAuthState } from '../../auth/auth'
 import { getBubbleApplications } from '../../repository/model/bubbleApplication'
@@ -16,18 +23,32 @@ export default function ApplicationIndex() {
       return
     }
     getBubbleApplications(currentUser.uid).then(d => {
-      const arr = d.map((x, index) => ({
-        id: index,
-        name: x.appName,
-      }))
+      const arr: Array<any> = []
+      d.forEach(x => {
+        arr.push({
+          id: x.id,
+          name: x.data().appName,
+        })
+      })
       setData(arr)
-      console.log(data)
     })
   }, [currentUser])
 
+  const lists = data.map(x => (
+    <Link key={x.id} href={'/application/' + x.id} passHref>
+      <ListItem>
+        <ListItemButton>
+          <ListItemText primary={x.name} />
+        </ListItemButton>
+      </ListItem>
+    </Link>
+  ))
+
   return (
     <>
-      <DataGrid columns={[{ field: 'name' }]} rows={data} autoHeight />
+      <Box sx={{ width: '100%' }}>
+        <List>{lists}</List>
+      </Box>
     </>
   )
 }
