@@ -3,5 +3,9 @@
   "typescript.tsdk": "node_modules/typescript/lib",
 
   // Prettier をデフォルトフォーマッターにする
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // これ消すと自動でテスト走るようになる。
+  // 重いので消している
+  "jest.jestCommandLine": "jest"
 }

@@ -1,15 +1,21 @@
 import {
   Box,
+  Button,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
 } from '@mui/material'
+import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { MdEdit, MdDelete } from 'react-icons/md'
 import { listenAuthState } from '../../auth/auth'
 import { getBubbleApplications } from '../../repository/model/bubbleApplication'
-import { BubbleApplicationType } from '../../store/bubbleProjectContext'
+import {
+  BubbleApplicationContext,
+  BubbleApplicationType,
+} from '../../store/bubbleProjectContext'
 import { CurrentUserType } from '../../store/currentUserContext'
 
 export default function ApplicationIndex() {
@@ -34,21 +40,57 @@ export default function ApplicationIndex() {
     })
   }, [currentUser])
 
-  const lists = data.map(x => (
-    <Link key={x.id} href={'/application/' + x.id} passHref>
-      <ListItem>
-        <ListItemButton>
-          <ListItemText primary={x.name} />
-        </ListItemButton>
-      </ListItem>
-    </Link>
-  ))
+  const handleEdit = () => {
+    console.log('aaa')
+  }
+
+  const handleDelete = () => {
+    console.log('aaa')
+  }
+
+  // カラム
+  const columns = [
+    // 削除ボタン
+    {
+      field: 'deleteBtn',
+      headerName: 'delete',
+      sortable: false,
+      disableClickEventBubbling: true,
+      renderCell: (params: { id: any }) => (
+        <a onClick={handleDelete} href="#">
+          <MdDelete size={32} />
+        </a>
+      ),
+    },
+    // 詳細ボタン
+    {
+      field: 'editBtn',
+      headerName: 'edit',
+      sortable: false,
+      disableClickEventBubbling: true,
+      renderCell: (params: { id: any }) => (
+        <a onClick={handleEdit} href="#">
+          <MdEdit size={32} />
+        </a>
+      ),
+    },
+    {
+      field: 'name',
+      headerName: 'name',
+      width: 250,
+      sortable: false,
+      // disableClickEventBubbling: true,
+      renderCell: (params: GridRenderCellParams) => (
+        <Link href={'/application/' + params.row.id}>
+          <a>{params.value}</a>
+        </Link>
+      ),
+    },
+  ]
 
   return (
     <>
-      <Box sx={{ width: '100%' }}>
-        <List>{lists}</List>
-      </Box>
+      <DataGrid rows={data} columns={columns} autoHeight pageSize={10} />
     </>
   )
 }

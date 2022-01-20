@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { listenAuthState } from '../../src/auth/auth'
 import DetailTable from '../../src/components/pages/detailTable'
 import {
@@ -16,10 +16,7 @@ import {
   BubbleTableSettingContextType,
   BubbleTableSettingType,
 } from '../../src/store/bubbleTableSettingContext'
-import {
-  CurrentUserContext,
-  CurrentUserType,
-} from '../../src/store/currentUserContext'
+import { CurrentUserContext } from '../../src/store/currentUserContext'
 import {
   BuildIsRefreshBubbleTableContext,
   IsRefreshBubbleTableContext,
@@ -62,24 +59,20 @@ const Home = () => {
     setBubbleTableSettingContextTypes,
   }
 
-  const [currentUser, setCurrentUser] = useState<CurrentUserType>(null)
-  const currentUserContextValue = {
-    currentUser,
-    setCurrentUser,
-  }
+  const currentUserContextValue = useContext(CurrentUserContext)
 
   useEffect(() => {
     if (!router.isReady) return
 
     const f = async () => {
       // ログインしているかどうかを判定する
-      listenAuthState(setCurrentUser)
+      listenAuthState(currentUserContextValue.setCurrentUser)
 
-      if (!currentUser) {
+      if (!currentUserContextValue.currentUser) {
         return
       }
 
-      const uid = currentUser.uid
+      const uid = currentUserContextValue.currentUser.uid
 
       // bubbleApplicationContextのデータをフェッチ
       if (typeof appId !== 'string') {
@@ -98,25 +91,19 @@ const Home = () => {
       )
     }
     f()
-  }, [router.isReady, currentUser])
+  }, [router.isReady, currentUserContextValue.currentUser])
 
   return (
     <>
-      <CurrentUserContext.Provider value={currentUserContextValue}>
-        <BubbleApplicationContext.Provider
-          value={bubbleApplicationContextValue}
-        >
-          <BubbleTableSettingContext.Provider
-            value={bubbleTableSettingsContext}
+      <BubbleApplicationContext.Provider value={bubbleApplicationContextValue}>
+        <BubbleTableSettingContext.Provider value={bubbleTableSettingsContext}>
+          <IsRefreshBubbleTableContext.Provider
+            value={isRefreshBubbleTableTypeContextValue}
           >
-            <IsRefreshBubbleTableContext.Provider
-              value={isRefreshBubbleTableTypeContextValue}
-            >
-              <DetailTable></DetailTable>
-            </IsRefreshBubbleTableContext.Provider>
-          </BubbleTableSettingContext.Provider>
-        </BubbleApplicationContext.Provider>
-      </CurrentUserContext.Provider>
+            <DetailTable></DetailTable>
+          </IsRefreshBubbleTableContext.Provider>
+        </BubbleTableSettingContext.Provider>
+      </BubbleApplicationContext.Provider>
     </>
   )
 }

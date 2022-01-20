@@ -15,7 +15,6 @@ export default function Header() {
           </Typography>
         </Link>
 
-        <BubbleTableHeaderTitle />
         <BubbleTableHeaderLoginButton />
       </Toolbar>
     </AppBar>

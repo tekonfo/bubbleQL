@@ -67,5 +67,6 @@ SSG にする？
 
 ### HOW to find icon
 
-https://react-icons.github.io/react-icons
+https://react-icons.github.io/react-icons/icons
+
 FYI ref : https://zenn.dev/taichifukumoto/articles/how-to-use-react-icons

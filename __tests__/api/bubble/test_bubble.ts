@@ -19,7 +19,7 @@ describe('next-test-api-route-handler test', () => {
 })
 
 // APIコールの確認のサンプル
-describe('', () => {
+describe('test', () => {
   const mockReq = httpMocks.createRequest<NextApiRequest>({})
   const mockRes = httpMocks.createResponse<NextApiResponse>()
 
