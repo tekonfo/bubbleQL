@@ -12,7 +12,9 @@ export default function BubbleTableHeaderTitle() {
     setOpen(false)
   }
 
-  const { bubbleApplicationContext } = useContext(BubbleApplicationContext)
+  const { bubbleApplicationContext, setBubbleApplicationContext } = useContext(
+    BubbleApplicationContext,
+  )
 
   return (
     <>
@@ -21,7 +23,12 @@ export default function BubbleTableHeaderTitle() {
           {bubbleApplicationContext ? bubbleApplicationContext.appName : ''}
         </Typography>
       </div>
-      <BubbleApplicationDialog open={open} onClose={handleClose} />
+      <BubbleApplicationDialog
+        open={open}
+        onClose={handleClose}
+        bubbleApplication={bubbleApplicationContext}
+        setBubbleApplication={setBubbleApplicationContext}
+      />
     </>
   )
 }

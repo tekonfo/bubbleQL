@@ -9,25 +9,33 @@ import {
 } from '@mui/material'
 import { useRouter } from 'next/dist/client/router'
 import React, { useContext, useState } from 'react'
-import { BubbleApplicationContext } from '../../../store/bubbleProjectContext'
+import {
+  BubbleApplicationContext,
+  BubbleApplicationType,
+} from '../../../store/bubbleProjectContext'
 import { CurrentUserContext } from '../../../store/currentUserContext'
 
-export default function BubbleTableHeaderTitleModal() {
-  const router = useRouter()
-  const { appId } = router.query
-  const { bubbleApplicationContext, setBubbleApplicationContext } = useContext(
-    BubbleApplicationContext,
-  )
+export default function BubbleTableHeaderTitleModal(props: {
+  appId?: string
+  bubbleApplication: BubbleApplicationType
+  setBubbleApplication: (
+    uid: string,
+    value: BubbleApplicationType,
+    appId?: string,
+  ) => void
+}) {
+  const { appId, bubbleApplication, setBubbleApplication } = props
   const user = useContext(CurrentUserContext)
-  const [input, setInput] = useState(bubbleApplicationContext)
+  const [input, setInput] = useState(bubbleApplication)
+
   const handleSubmit = () => {
-    if (typeof appId != 'string') {
-      return
-    }
-    console.log(appId, input)
-    setBubbleApplicationContext(user.currentUser?.uid ?? '', appId, {
-      ...input,
-    })
+    setBubbleApplication(
+      user.currentUser?.uid ?? '',
+      {
+        ...input,
+      },
+      appId,
+    )
   }
 
   return (
@@ -66,7 +74,7 @@ export default function BubbleTableHeaderTitleModal() {
               id="dataApiUrl"
               label="dataApiUrl"
               variant="standard"
-              defaultValue={bubbleApplicationContext.dataApiUrl}
+              defaultValue={input.dataApiUrl}
               onChange={evt =>
                 setInput({ ...input, dataApiUrl: evt.target.value })
               }
@@ -75,7 +83,7 @@ export default function BubbleTableHeaderTitleModal() {
               id="workFlowApiUrl"
               label="workFlowApiUrl"
               variant="standard"
-              defaultValue={bubbleApplicationContext.workFlowApiUrl}
+              defaultValue={input.workFlowApiUrl}
               onChange={evt =>
                 setInput({ ...input, workFlowApiUrl: evt.target.value })
               }

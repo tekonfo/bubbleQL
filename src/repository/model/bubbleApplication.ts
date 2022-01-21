@@ -13,10 +13,22 @@ export const bubbleApplicationCol = (uid: string) => {
   return createCollection<BubbleApplicationType>(`User/${uid}/Application`)
 }
 
+export const setBubbleApplicationContextWithFireStore = (
+  uid: string,
+  appId: string,
+  value: BubbleApplicationType,
+  setBubbleApplicationContext: (
+    value: React.SetStateAction<BubbleApplicationType>,
+  ) => void,
+) => {
+  setBubbleApplicationContext(value)
+  setBubbleApplication(uid, value, appId)
+}
+
 export const setBubbleApplication = async (
   uid: string,
-  id: string,
   data: BubbleApplicationType,
+  id?: string,
 ) => {
   const ref = doc(bubbleApplicationCol(uid), id)
   await setDoc(ref, data)
