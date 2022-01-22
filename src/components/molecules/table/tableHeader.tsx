@@ -1,6 +1,6 @@
-import Box, { BoxProps } from '@mui/material/Box'
-import { useEffect } from 'react'
+import Box from '@mui/material/Box'
 import BubbleTableHeaderTitle from '../bubbleTableHeader/title'
+import FilterFieldsDialog from '../dialog/filterFieldsDialog'
 import HideFields from '../tableHeader/hideFields'
 
 export default function TableHeader({
@@ -30,8 +30,8 @@ export default function TableHeader({
       >
         <div>VIEWS</div>
         <div>Grid View</div>
-        <HideFields></HideFields>
-        <div>Filter</div>
+        <HideFields />
+        <FilterFieldsDialog />
         <div>Group</div>
         <div>Sort</div>
         <div>Color</div>

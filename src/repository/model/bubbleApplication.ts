@@ -30,8 +30,16 @@ export const setBubbleApplication = async (
   data: BubbleApplicationType,
   id?: string,
 ) => {
-  const ref = doc(bubbleApplicationCol(uid), id)
-  await setDoc(ref, data)
+  console.log(uid)
+  const col = bubbleApplicationCol(uid)
+  console.log(col)
+  if (id) {
+    const ref = doc(col, id)
+    await setDoc(ref, data)
+  } else {
+    const ref = doc(col)
+    await setDoc(ref, data)
+  }
 }
 
 export const getBubbleApplication = async (

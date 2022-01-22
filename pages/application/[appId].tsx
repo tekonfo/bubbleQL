@@ -44,7 +44,7 @@ const Home = () => {
     value: BubbleApplicationType,
   ) => {
     setBubbleApplicationContext(value)
-    setBubbleApplication(uid, appId, value)
+    setBubbleApplication(uid, value, appId)
   }
   const bubbleApplicationContextValue = {
     bubbleApplicationContext,

@@ -1,21 +1,9 @@
-import {
-  Box,
-  Button,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-} from '@mui/material'
 import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid'
 import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
 import { MdEdit, MdDelete } from 'react-icons/md'
 import { listenAuthState } from '../../auth/auth'
 import { getBubbleApplications } from '../../repository/model/bubbleApplication'
-import {
-  BubbleApplicationContext,
-  BubbleApplicationType,
-} from '../../store/bubbleProjectContext'
 import { CurrentUserType } from '../../store/currentUserContext'
 
 export default function ApplicationIndex() {
