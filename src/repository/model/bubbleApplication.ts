@@ -5,6 +5,7 @@ import {
   getDoc,
   getDocs,
   QuerySnapshot,
+  deleteDoc,
 } from 'firebase/firestore'
 import { BubbleApplicationType } from '../../store/bubbleProjectContext'
 import { createCollection } from '../firestore'
@@ -30,9 +31,7 @@ export const setBubbleApplication = async (
   data: BubbleApplicationType,
   id?: string,
 ) => {
-  console.log(uid)
   const col = bubbleApplicationCol(uid)
-  console.log(col)
   if (id) {
     const ref = doc(col, id)
     await setDoc(ref, data)
@@ -40,6 +39,16 @@ export const setBubbleApplication = async (
     const ref = doc(col)
     await setDoc(ref, data)
   }
+}
+
+export const deleteBubbleApplication = async (
+  uid: string,
+  id: string,
+): Promise<void> => {
+  const col = bubbleApplicationCol(uid)
+  const d = doc(col, id)
+  await deleteDoc(d)
+  return
 }
 
 export const getBubbleApplication = async (
