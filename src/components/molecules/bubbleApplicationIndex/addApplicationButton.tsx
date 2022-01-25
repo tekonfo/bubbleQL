@@ -1,12 +1,16 @@
 import AddIcon from '@mui/icons-material/Add'
 import { Fab } from '@mui/material'
-import React from 'react'
+import React, { useContext } from 'react'
 import { setBubbleApplication } from '../../../repository/model/bubbleApplication'
 import { BubbleApplicationType } from '../../../store/bubbleProjectContext'
+import { IsRefreshBubbleTableContext } from '../../../store/refreshBubbleTableContext'
 import { BubbleApplicationDialog } from '../dialog/bubbleApplicationDialog'
 
 export default function AddApplicationButton() {
   const [open, setOpen] = React.useState(false)
+  const { setIsRefreshBubbleTableContextType } = useContext(
+    IsRefreshBubbleTableContext,
+  )
 
   const handleClose = (value: string) => {
     setOpen(false)
@@ -38,6 +42,7 @@ export default function AddApplicationButton() {
   ) => {
     setBubbleApplication(uid, data, appId).then()
     handleClose('')
+    setIsRefreshBubbleTableContextType({ isRefreshTable: true })
   }
 
   return (
