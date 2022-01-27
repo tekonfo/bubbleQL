@@ -1,5 +1,7 @@
 import Box from '@mui/material/Box'
+import { useState } from 'react'
 import { BubbleTableSettingContextType } from '../../../store/bubbleTableSettingContext'
+import TableTab from '../bubbleTableHeader/tableTab'
 import BubbleTableHeaderTitle from '../bubbleTableHeader/title'
 import FilterFieldsDialog from '../dialog/filterFieldsDialog'
 import HideFields from '../tableHeader/hideFields'
@@ -11,7 +13,24 @@ export default function TableHeader({
   children?: React.ReactNode
   tables: Array<BubbleTableSettingContextType>
 }) {
-  const tableDivs = tables.map(x => <div key={x.tableName}>{x.tableName}</div>)
+  const tableDivs = tables.map(x => <TableTab key={x.tableName} table={x} />)
+
+  const [isNewTable, setIsNewTable] = useState(false)
+  let addTable
+  if (isNewTable) {
+    addTable = (
+      <TableTab
+        table={{ tableName: '' }}
+        isAllEdit={true}
+        clickEvent={() => {
+          setIsNewTable(false)
+        }}
+      />
+    )
+  } else {
+    addTable = <div onClick={() => setIsNewTable(true)}>add table</div>
+  }
+
   return (
     <>
       <Box
@@ -33,6 +52,7 @@ export default function TableHeader({
         }}
       >
         {tableDivs}
+        {addTable}
       </Box>
       <Box
         sx={{
