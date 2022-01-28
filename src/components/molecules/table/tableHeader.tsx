@@ -8,12 +8,18 @@ import HideFields from '../tableHeader/hideFields'
 
 export default function TableHeader({
   children,
+  uid,
+  appId,
   tables,
 }: {
   children?: React.ReactNode
+  uid: string
+  appId: string
   tables: Array<BubbleTableSettingContextType>
 }) {
-  const tableDivs = tables.map(x => <TableTab key={x.tableName} table={x} />)
+  const tableDivs = tables.map(x => (
+    <TableTab appId={appId} uid={uid} key={x.tableName} table={x} />
+  ))
 
   const [isNewTable, setIsNewTable] = useState(false)
   let addTable
@@ -25,6 +31,8 @@ export default function TableHeader({
         clickEvent={() => {
           setIsNewTable(false)
         }}
+        appId={appId}
+        uid={uid}
       />
     )
   } else {

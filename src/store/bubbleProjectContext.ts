@@ -17,6 +17,7 @@ export type SetBubbleApplicationInputType = {
 
 export type BubbleApplicationContextType = {
   bubbleApplicationContext: BubbleApplicationType
+  appId: string
   setBubbleApplicationContext: (
     uid: string,
     data: BubbleApplicationType,
@@ -31,6 +32,7 @@ export const BubbleApplicationContext = createContext(
 
 export const BuildBubbleApplicationContext =
   (): BubbleApplicationContextType => {
+    const [appId, setAppId] = useState('')
     const [bubbleApplicationContext, setBubbleApplicationContext] =
       useState<BubbleApplicationType>({
         apiToken: '',
@@ -41,17 +43,19 @@ export const BuildBubbleApplicationContext =
         enableDataTables: [],
       })
 
-    const setBubbleApplicationContextWithFireStore = (
+    const setBubbleApplicationContextWithFireStore = async (
       uid: string,
       value: BubbleApplicationType,
       appId?: string,
     ) => {
       setBubbleApplicationContext(value)
-      setBubbleApplication(uid, value, appId)
+      const id = await setBubbleApplication(uid, value, appId)
+      setAppId(id)
     }
 
     return {
       bubbleApplicationContext,
+      appId,
       setBubbleApplicationContext: setBubbleApplicationContextWithFireStore,
     }
   }

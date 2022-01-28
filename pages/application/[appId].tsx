@@ -46,8 +46,12 @@ const Home = () => {
     setBubbleApplicationContext(value)
     setBubbleApplication(uid, value, appId)
   }
+
+  const id = typeof appId == 'string' ? appId : ''
+
   const bubbleApplicationContextValue = {
     bubbleApplicationContext,
+    appId: id,
     setBubbleApplicationContext: setBubbleApplicationContextWithFireStore,
   }
 

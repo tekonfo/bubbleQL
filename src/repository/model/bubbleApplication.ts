@@ -32,13 +32,14 @@ export const setBubbleApplication = async (
   id?: string,
 ) => {
   const col = bubbleApplicationCol(uid)
+  let ref
   if (id) {
-    const ref = doc(col, id)
-    await setDoc(ref, data)
+    ref = doc(col, id)
   } else {
-    const ref = doc(col)
-    await setDoc(ref, data)
+    ref = doc(col)
   }
+  await setDoc(ref, data)
+  return ref.id
 }
 
 export const deleteBubbleApplication = async (
