@@ -1,6 +1,10 @@
 import { createContext } from 'react'
-export type BubbleTableSettingContextType = {
+export type BubbleTableSettingEntity = {
   tableName: string
+}
+export type BubbleTableSettingContextType = {
+  id: string
+  data: BubbleTableSettingEntity
 }
 export type BubbleTableSettingType = {
   bubbleTableSettingContextTypes: Array<BubbleTableSettingContextType>

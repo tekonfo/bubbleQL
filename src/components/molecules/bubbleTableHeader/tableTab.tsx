@@ -2,7 +2,10 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import { InputAdornment, TextField } from '@mui/material'
 import { useState } from 'react'
 import { upsertBubbleTableSetting } from '../../../repository/model/bubbleTableSetting'
-import { BubbleTableSettingContextType } from '../../../store/bubbleTableSettingContext'
+import {
+  BubbleTableSettingContextType,
+  BubbleTableSettingEntity,
+} from '../../../store/bubbleTableSettingContext'
 export default function TableTab({
   uid,
   appId,
@@ -13,13 +16,17 @@ export default function TableTab({
 }: {
   uid: string
   appId: string
-  table: BubbleTableSettingContextType
+  table: BubbleTableSettingEntity
   tableId?: string
   isAllEdit?: boolean
   clickEvent?: () => void
 }) {
   const [isEdit, setIsEdit] = useState(false)
-  const [tableName, setTableName] = useState(table.tableName)
+  if (!table) {
+    return <div>loading</div>
+  }
+
+  const [tableName, setTableName] = useState(table.tableName ?? '')
 
   const showTab = (
     <div key={table.tableName} onDoubleClick={() => setIsEdit(true)}>

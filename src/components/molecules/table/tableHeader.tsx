@@ -18,7 +18,13 @@ export default function TableHeader({
   tables: Array<BubbleTableSettingContextType>
 }) {
   const tableDivs = tables.map(x => (
-    <TableTab appId={appId} uid={uid} key={x.tableName} table={x} />
+    <TableTab
+      appId={appId}
+      uid={uid}
+      key={x.id}
+      table={x.data}
+      tableId={x.id}
+    />
   ))
 
   const [isNewTable, setIsNewTable] = useState(false)
