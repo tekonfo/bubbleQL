@@ -1,6 +1,9 @@
 import Box from '@mui/material/Box'
 import { useState } from 'react'
-import { BubbleTableSettingContextType } from '../../../store/bubbleTableSettingContext'
+import {
+  BubbleTableSettingContextType,
+  BubbleTableSettingType,
+} from '../../../store/bubbleTableSettingContext'
 import TableTab from '../bubbleTableHeader/tableTab'
 import BubbleTableHeaderTitle from '../bubbleTableHeader/title'
 import FilterFieldsDialog from '../dialog/filterFieldsDialog'
@@ -10,20 +13,25 @@ export default function TableHeader({
   children,
   uid,
   appId,
-  tables,
+  bubbleTableSettingType,
 }: {
   children?: React.ReactNode
   uid: string
   appId: string
-  tables: Array<BubbleTableSettingContextType>
+  bubbleTableSettingType: BubbleTableSettingType
 }) {
-  const tableDivs = tables.map(x => (
+  const tables = bubbleTableSettingType.bubbleTableSettingContextTypes
+
+  const tableDivs = tables.map((x, index) => (
     <TableTab
       appId={appId}
       uid={uid}
       key={x.id}
       table={x.data}
       tableId={x.id}
+      index={index}
+      setIndex={bubbleTableSettingType.setIndex}
+      isActive={index === bubbleTableSettingType.index}
     />
   ))
 
@@ -39,6 +47,8 @@ export default function TableHeader({
         }}
         appId={appId}
         uid={uid}
+        index={0}
+        isActive={false}
       />
     )
   } else {

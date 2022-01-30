@@ -1,3 +1,4 @@
+import AcUnitIcon from '@mui/icons-material/AcUnit'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import { InputAdornment, TextField } from '@mui/material'
 import { useState } from 'react'
@@ -13,6 +14,9 @@ export default function TableTab({
   tableId,
   isAllEdit = false,
   clickEvent,
+  index,
+  setIndex,
+  isActive,
 }: {
   uid: string
   appId: string
@@ -20,6 +24,9 @@ export default function TableTab({
   tableId?: string
   isAllEdit?: boolean
   clickEvent?: () => void
+  index: number
+  setIndex: React.Dispatch<React.SetStateAction<number>>
+  isActive: boolean
 }) {
   const [isEdit, setIsEdit] = useState(false)
   if (!table) {
@@ -28,11 +35,27 @@ export default function TableTab({
 
   const [tableName, setTableName] = useState(table.tableName ?? '')
 
-  const showTab = (
-    <div key={table.tableName} onDoubleClick={() => setIsEdit(true)}>
-      {table.tableName}
-    </div>
-  )
+  let showTab
+  if (isActive) {
+    showTab = (
+      <div key={table.tableName} onDoubleClick={() => setIsEdit(true)}>
+        {table.tableName}
+        <AcUnitIcon />
+      </div>
+    )
+  } else {
+    showTab = (
+      <div
+        key={table.tableName}
+        onClick={() => {
+          setIndex(index)
+        }}
+        onDoubleClick={() => setIsEdit(true)}
+      >
+        {table.tableName}
+      </div>
+    )
+  }
 
   const click = () => {
     upsertBubbleTableSetting(uid, appId, { tableName }, tableId)

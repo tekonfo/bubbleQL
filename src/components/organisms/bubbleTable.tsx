@@ -22,7 +22,7 @@ export default function BubbleTable() {
       <TableHeader
         uid={currentUser.currentUser.uid}
         appId={app.appId}
-        tables={tableSettingContext.bubbleTableSettingContextTypes}
+        bubbleTableSettingType={tableSettingContext}
       />
       <div>
         <TableSidebar />

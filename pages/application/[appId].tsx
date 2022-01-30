@@ -56,9 +56,14 @@ const Home = () => {
   }
 
   const [bubbleTableSettingContextTypes, setBubbleTableSettingContextTypes] =
-    useState<Array<BubbleTableSettingContextType>>([{ tableName: '' }])
+    useState<Array<BubbleTableSettingContextType>>([
+      { id: '', data: { tableName: '' } },
+    ])
+
+  const [index, setIndex] = useState(0)
   const bubbleTableSettingsContext: BubbleTableSettingType = {
-    index: 0,
+    index,
+    setIndex,
     bubbleTableSettingContextTypes,
     setBubbleTableSettingContextTypes,
   }

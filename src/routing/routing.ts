@@ -26,7 +26,7 @@ export class BubbleRouting extends Routing {
     const params = {
       appName: this.applicationContext.appName,
       apiToken: this.applicationContext.apiToken,
-      tableName: this.tableSettingContext.tableName,
+      tableName: this.tableSettingContext.data.tableName,
       isTestMode: this.applicationContext.isTestMode.toString(),
     }
     const query_params = new URLSearchParams(params)
@@ -34,19 +34,19 @@ export class BubbleRouting extends Routing {
   }
 
   private postRoute(): string {
-    return `https://${this.applicationContext.appName}.bubbleapps.io/version-test/api/1.1/obj/${this.tableSettingContext.tableName}`
+    return `https://${this.applicationContext.appName}.bubbleapps.io/version-test/api/1.1/obj/${this.tableSettingContext.data.tableName}`
   }
 
   private detailRoute(id: string): string {
-    return `https://${this.applicationContext.appName}.bubbleapps.io/version-test/api/1.1/obj/${this.tableSettingContext.tableName}/${id}`
+    return `https://${this.applicationContext.appName}.bubbleapps.io/version-test/api/1.1/obj/${this.tableSettingContext.data.tableName}/${id}`
   }
 
   private updateRoute(id: string): string {
-    return `https://${this.applicationContext.appName}.bubbleapps.io/version-test/api/1.1/obj/${this.tableSettingContext.tableName}/${id}`
+    return `https://${this.applicationContext.appName}.bubbleapps.io/version-test/api/1.1/obj/${this.tableSettingContext.data.tableName}/${id}`
   }
 
   private deleteRoute(id: string): string {
-    return `https://${this.applicationContext.appName}.bubbleapps.io/version-test/api/1.1/obj/${this.tableSettingContext.tableName}/${id}`
+    return `https://${this.applicationContext.appName}.bubbleapps.io/version-test/api/1.1/obj/${this.tableSettingContext.data.tableName}/${id}`
   }
 
   async fetcher(url: string): Promise<BubbleBasicData | null> {
