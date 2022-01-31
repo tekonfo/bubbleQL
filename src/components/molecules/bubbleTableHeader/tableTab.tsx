@@ -29,11 +29,10 @@ export default function TableTab({
   isActive: boolean
 }) {
   const [isEdit, setIsEdit] = useState(false)
+  const [tableName, setTableName] = useState(table.tableName ?? '')
   if (!table) {
     return <div>loading</div>
   }
-
-  const [tableName, setTableName] = useState(table.tableName ?? '')
 
   let showTab
   if (isActive) {

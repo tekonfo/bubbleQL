@@ -49,6 +49,7 @@ export default function TableHeader({
         uid={uid}
         index={0}
         isActive={false}
+        setIndex={() => {}}
       />
     )
   } else {
