@@ -1,12 +1,9 @@
-import AcUnitIcon from '@mui/icons-material/AcUnit'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import { InputAdornment, TextField } from '@mui/material'
+import Button from '@mui/material/Button'
 import { useState } from 'react'
 import { upsertBubbleTableSetting } from '../../../repository/model/bubbleTableSetting'
-import {
-  BubbleTableSettingContextType,
-  BubbleTableSettingEntity,
-} from '../../../store/bubbleTableSettingContext'
+import { BubbleTableSettingEntity } from '../../../store/bubbleTableSettingContext'
 export default function TableTab({
   uid,
   appId,
@@ -34,30 +31,23 @@ export default function TableTab({
     return <div>loading</div>
   }
 
-  let showTab
-  if (isActive) {
-    showTab = (
-      <div key={table.tableName} onDoubleClick={() => setIsEdit(true)}>
-        {table.tableName}
-        <AcUnitIcon />
-      </div>
-    )
-  } else {
-    showTab = (
-      <div
-        key={table.tableName}
-        onClick={() => {
-          setIndex(index)
-        }}
-        onDoubleClick={() => setIsEdit(true)}
-      >
-        {table.tableName}
-      </div>
-    )
-  }
+  const showTab = (
+    <Button
+      key={table.tableName}
+      onClick={() => {
+        setIndex(index)
+      }}
+      onDoubleClick={() => setIsEdit(true)}
+      color={isActive ? 'primary' : 'secondary'}
+    >
+      {table.tableName}
+    </Button>
+  )
 
   const click = () => {
-    upsertBubbleTableSetting(uid, appId, { tableName }, tableId)
+    if (tableName !== '') {
+      upsertBubbleTableSetting(uid, appId, { tableName }, tableId)
+    }
 
     setIsEdit(false)
     if (clickEvent) {

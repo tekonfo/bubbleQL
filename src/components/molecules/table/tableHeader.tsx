@@ -1,3 +1,4 @@
+import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/material/Box'
 import { useState } from 'react'
 import {
@@ -53,7 +54,11 @@ export default function TableHeader({
       />
     )
   } else {
-    addTable = <div onClick={() => setIsNewTable(true)}>add table</div>
+    addTable = (
+      <div onClick={() => setIsNewTable(true)}>
+        <AddIcon />
+      </div>
+    )
   }
 
   return (
