@@ -1,6 +1,7 @@
 import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/material/Box'
 import { useState } from 'react'
+import { getBubbleTableSettings } from '../../../repository/model/bubbleTableSetting'
 import {
   BubbleTableSettingContextType,
   BubbleTableSettingType,
@@ -23,6 +24,12 @@ export default function TableHeader({
 }) {
   const tables = bubbleTableSettingType.bubbleTableSettingContextTypes
 
+  const refreshTableSettings = async () => {
+    bubbleTableSettingType.setBubbleTableSettingContextTypes(
+      await getBubbleTableSettings(uid, appId),
+    )
+  }
+
   const tableDivs = tables.map((x, index) => (
     <TableTab
       appId={appId}
@@ -33,6 +40,7 @@ export default function TableHeader({
       index={index}
       setIndex={bubbleTableSettingType.setIndex}
       isActive={index === bubbleTableSettingType.index}
+      clickEvent={refreshTableSettings}
     />
   ))
 
@@ -45,6 +53,7 @@ export default function TableHeader({
         isAllEdit={true}
         clickEvent={() => {
           setIsNewTable(false)
+          refreshTableSettings()
         }}
         appId={appId}
         uid={uid}
