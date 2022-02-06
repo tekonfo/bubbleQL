@@ -45,7 +45,9 @@ export default function TableTab({
   )
 
   const click = () => {
-    if (tableName !== '') {
+    // tableNameが空もしくは初期値と一致している場合は更新しない
+    if (tableName !== '' && table.tableName !== tableName) {
+      console.log(table.tableName, tableName)
       upsertBubbleTableSetting(uid, appId, { tableName }, tableId)
     }
 
