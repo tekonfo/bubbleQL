@@ -1,4 +1,5 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import DeleteIcon from '@mui/icons-material/Delete'
 import { InputAdornment, TextField } from '@mui/material'
 import Button from '@mui/material/Button'
 import { useState } from 'react'
@@ -39,6 +40,17 @@ export default function TableTab({
       }}
       onDoubleClick={() => setIsEdit(true)}
       color={isActive ? 'primary' : 'secondary'}
+      startIcon={
+        isActive ? (
+          <DeleteIcon
+            onClick={() => {
+              console.log('test')
+            }}
+          />
+        ) : (
+          <div />
+        )
+      }
     >
       {table.tableName}
     </Button>
