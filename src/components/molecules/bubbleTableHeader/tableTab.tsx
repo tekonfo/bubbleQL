@@ -2,9 +2,20 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { InputAdornment, TextField } from '@mui/material'
 import Button from '@mui/material/Button'
+import { styled } from '@mui/material/styles'
 import { useState } from 'react'
 import { upsertBubbleTableSetting } from '../../../repository/model/bubbleTableSetting'
 import { BubbleTableSettingEntity } from '../../../store/bubbleTableSettingContext'
+
+const CustomButton = styled(Button)({
+  '&:hover': {
+    background: 'red',
+  },
+  '&:active': {
+    background: 'aqua',
+  },
+})
+
 export default function TableTab({
   uid,
   appId,
@@ -42,11 +53,15 @@ export default function TableTab({
       color={isActive ? 'primary' : 'secondary'}
       startIcon={
         isActive ? (
-          <DeleteIcon
-            onClick={() => {
-              console.log('test')
-            }}
-          />
+          <CustomButton variant="contained">
+            {
+              <DeleteIcon
+                onClick={() => {
+                  console.log('test')
+                }}
+              />
+            }
+          </CustomButton>
         ) : (
           <div />
         )
