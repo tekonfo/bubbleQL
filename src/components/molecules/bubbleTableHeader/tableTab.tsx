@@ -4,15 +4,15 @@ import { InputAdornment, TextField } from '@mui/material'
 import Button from '@mui/material/Button'
 import { styled } from '@mui/material/styles'
 import { useState } from 'react'
-import { upsertBubbleTableSetting } from '../../../repository/model/bubbleTableSetting'
+import {
+  deleteBubbleTableSetting,
+  upsertBubbleTableSetting,
+} from '../../../repository/model/bubbleTableSetting'
 import { BubbleTableSettingEntity } from '../../../store/bubbleTableSettingContext'
 
 const CustomButton = styled(Button)({
   '&:hover': {
     background: 'red',
-  },
-  '&:active': {
-    background: 'aqua',
   },
 })
 
@@ -57,7 +57,15 @@ export default function TableTab({
             {
               <DeleteIcon
                 onClick={() => {
-                  console.log('test')
+                  if (!tableId) {
+                    return
+                  }
+
+                  deleteBubbleTableSetting(uid, appId, tableId)
+                  setIsEdit(false)
+                  if (clickEvent) {
+                    clickEvent()
+                  }
                 }}
               />
             }
