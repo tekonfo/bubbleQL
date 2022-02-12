@@ -1,6 +1,6 @@
 // ReactDOM.createPortal()の第一引数に指定するコンポーネントです。
 // Atomic Designのpages層に相当しますが、ただtemplatesを呼び出すだけのwrapperとなっています。
-import { useEffect, useMemo, useState, useContext } from 'react'
+import { useEffect, useMemo, useState, useContext, createContext } from 'react'
 import { TableInstance, useTable } from 'react-table'
 import { BubbleRouting } from '../../routing/routing'
 import BubbleService from '../../services/bubbleService'
@@ -10,6 +10,8 @@ import { BubbleTableSettingContext } from '../../store/bubbleTableSettingContext
 import { IsRefreshBubbleTableContext } from '../../store/refreshBubbleTableContext'
 import { defaultColumn } from '../molecules/table/defaultCell'
 import DetailTableTemplate from '../templates/detailTableTemplate'
+
+export const IsFetchErrorContext = createContext(false)
 
 export default function DetailTable() {
   const [columnsData, setColumnsData] = useState([] as any[])
@@ -38,6 +40,8 @@ export default function DetailTable() {
 
   const [table, setTable] = useState(tableIns)
   const value = { table, setTable }
+  const [isError, setIsError] = useState(false)
+  const IsFetchErrorContext = createContext(isError)
 
   useEffect(() => {
     const getData = async () => {
@@ -53,8 +57,15 @@ export default function DetailTable() {
           bubbleTableSettingContext.index
         ],
       )
-      const data = await routing.fetcher(routing.route())
-      console.log(data)
+      let data
+      try {
+        data = await routing.fetcher(routing.route())
+      } catch {
+        // errorであることを通知するcontextが必要
+        console.log('error')
+        setIsError(true)
+      }
+
       const bubbleService = new BubbleService()
       setBodyData(bubbleService.getBody(data?.results))
       const keys = bubbleService.getKeys(data?.results, routing, () => {
@@ -83,7 +94,9 @@ export default function DetailTable() {
   return (
     <>
       <BubbleTableContext.Provider value={value}>
-        <DetailTableTemplate />
+        <IsFetchErrorContext.Provider value={isError}>
+          <DetailTableTemplate />
+        </IsFetchErrorContext.Provider>
       </BubbleTableContext.Provider>
     </>
   )
